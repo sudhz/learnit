@@ -1,7 +1,7 @@
-import React from "react";
+import { Typography } from "@mui/material";
 
-const Login = () => {
-  return <div>Login</div>;
+const StudentLogin = () => {
+  return <Typography variant="h2">Login</Typography>;
 };
 
-export default Login;
+export default StudentLogin;

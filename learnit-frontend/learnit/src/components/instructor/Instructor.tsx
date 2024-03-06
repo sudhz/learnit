@@ -1,27 +1,27 @@
-import { Button, Box, Typography, Stack } from "@mui/material";
+import { Box, Button, Stack, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 
-const ChooseUserType = () => {
+const Instructor = () => {
   return (
     <Stack margin={25} alignItems="center">
-      <Typography variant="h2">Continue as</Typography>
+      <Typography variant="h2">Start teaching as an instructor!</Typography>
       <Box margin={10}>
-        <Stack spacing={4} direction="row">
+        <Stack spacing={4} direction="column">
           <Button
             component={Link}
-            to="/student"
+            to="/instructor/signup"
             variant="contained"
             size="large"
           >
-            a student
+            Sign Up
           </Button>
           <Button
             component={Link}
-            to="/instructor"
+            to="/instructor/login"
             variant="contained"
             size="large"
           >
-            an instructor
+            Login
           </Button>
         </Stack>
       </Box>
@@ -29,4 +29,4 @@ const ChooseUserType = () => {
   );
 };
 
-export default ChooseUserType;
+export default Instructor;

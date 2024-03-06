@@ -2,9 +2,9 @@ import { AppBar, IconButton, Toolbar } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import SchoolIcon from "@mui/icons-material/School";
 import "./App.css";
-import ChooseUserType from "./components/ChooseUserType";
+import { Link } from "react-router-dom";
 
-function App() {
+function App({ children }: { children: JSX.Element }) {
   return (
     <>
       <AppBar position="static">
@@ -16,16 +16,23 @@ function App() {
             aria-label="menu"
             sx={{ mr: 2 }}
           >
-            <SchoolIcon />
+            <Link to="/">
+              <div style={{ color: "white" }}>
+                <SchoolIcon color="inherit" />
+              </div>
+            </Link>
           </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            LearnIt
+          <Typography
+            variant="h6"
+            component={Link}
+            sx={{ flexGrow: 1, color: "white", textDecoration: "none" }}
+            to="/"
+          >
+            Learnit
           </Typography>
         </Toolbar>
       </AppBar>
-      <body>
-        <ChooseUserType />
-      </body>
+      <body>{children}</body>
     </>
   );
 }

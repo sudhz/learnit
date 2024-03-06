@@ -9,20 +9,68 @@ import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 import Login from "./components/Login";
-import Signup from "./components/Signup";
+import StudentSignup from "./components/student/StudentSignup";
+import Student from "./components/student/Student";
+import Instructor from "./components/instructor/Instructor";
+import ChooseUserType from "./components/ChooseUserType";
+import InstructorSignup from "./components/instructor/InstructorSignup";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
+    element: (
+      <App>
+        <ChooseUserType />
+      </App>
+    ),
+  },
+  {
+    path: "/student",
+    element: (
+      <App>
+        <Student />
+      </App>
+    ),
+  },
+  {
+    path: "/instructor",
+    element: (
+      <App>
+        <Instructor />
+      </App>
+    ),
   },
   {
     path: "/student/login",
-    element: <Login />,
+    element: (
+      <App>
+        <Login />
+      </App>
+    ),
   },
   {
     path: "/student/signup",
-    element: <Signup />,
+    element: (
+      <App>
+        <StudentSignup />
+      </App>
+    ),
+  },
+  {
+    path: "/instructor/signup",
+    element: (
+      <App>
+        <InstructorSignup />
+      </App>
+    ),
+  },
+  {
+    path: "/instructor/login",
+    element: (
+      <App>
+        <Login />
+      </App>
+    ),
   },
 ]);
 
