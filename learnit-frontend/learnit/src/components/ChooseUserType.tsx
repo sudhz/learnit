@@ -2,15 +2,7 @@ import { Button, Box, Typography, Stack } from "@mui/material";
 
 const ChooseUserType = () => {
   return (
-    <Box
-      margin={25}
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-
-        alignItems: "center",
-      }}
-    >
+    <Stack margin={25} alignItems="center">
       <Typography variant="h2">Continue as:</Typography>
       <Box margin={10}>
         <Stack spacing={4} direction="row">
@@ -22,7 +14,7 @@ const ChooseUserType = () => {
           </Button>
         </Stack>
       </Box>
-    </Box>
+    </Stack>
   );
 };
 
