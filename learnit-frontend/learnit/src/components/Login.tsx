@@ -2,6 +2,8 @@ import {
   Alert,
   Box,
   Button,
+  IconButton,
+  InputAdornment,
   Stack,
   TextField,
   Typography,
@@ -9,6 +11,9 @@ import {
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useNavigate } from "react-router-dom";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { useState } from "react";
 
 const schema = z.object({
   email: z.string().email(),
@@ -18,6 +23,7 @@ const schema = z.object({
 type FormFields = z.infer<typeof schema>;
 
 const Login = () => {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -30,6 +36,7 @@ const Login = () => {
   const onSubmit: SubmitHandler<FormFields> = async (data) => {
     try {
       await new Promise((resolve) => setTimeout(resolve, 1000));
+      console.log(data);
       throw new Error();
     } catch (error) {
       setError("root", {
@@ -37,9 +44,9 @@ const Login = () => {
       });
     }
   };
-
+  const [showPassword, setShowPassword] = useState(false);
   return (
-    <Stack margin={25} alignItems="center">
+    <Stack margin={20} alignItems="center">
       <Typography variant="h2">Login</Typography>
       <Box margin={5}>
         <form noValidate onSubmit={handleSubmit(onSubmit)}>
@@ -54,10 +61,31 @@ const Login = () => {
             <TextField
               {...register("password")}
               label="Password"
-              type="password"
+              type={showPassword ? "text" : "password"}
               error={!!errors.password}
               helperText={errors.password?.message}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      size="small"
+                      aria-label="toggle password visibility"
+                      onClick={() => setShowPassword(!showPassword)}
+                      onMouseDown={(e) => e.preventDefault()}
+                    >
+                      {showPassword ? (
+                        <VisibilityOff fontSize="small" />
+                      ) : (
+                        <Visibility fontSize="small" />
+                      )}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
             />
+            {errors.root && (
+              <Alert severity="error">{errors.root.message}</Alert>
+            )}
             <Button
               type="submit"
               variant="contained"
@@ -66,9 +94,14 @@ const Login = () => {
             >
               {isSubmitting ? "Loading..." : "Login"}
             </Button>
-            {errors.root && (
-              <Alert severity="error">{errors.root.message}</Alert>
-            )}
+            <Button
+              variant="contained"
+              color="primary"
+              disabled={isSubmitting}
+              onClick={() => navigate(-1)}
+            >
+              Go Back
+            </Button>
           </Stack>
         </form>
       </Box>

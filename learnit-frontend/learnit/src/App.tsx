@@ -9,12 +9,12 @@ function App() {
   return (
     <>
       <header>
-        <AppBar position="static">
+        <AppBar color="primary" position="static">
           <Toolbar>
             <IconButton
               size="large"
               edge="start"
-              color="inherit"
+              color="primary"
               aria-label="menu"
               sx={{ mr: 2 }}
             >
@@ -27,7 +27,7 @@ function App() {
             <Typography
               variant="h5"
               component={Link}
-              sx={{ flexGrow: 1, color: "white", textDecoration: "none" }}
+              sx={{ color: "white", textDecoration: "none" }}
               to="/"
             >
               Learnit

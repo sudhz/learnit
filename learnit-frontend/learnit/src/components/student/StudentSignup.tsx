@@ -13,6 +13,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const schema = z
   .object({
@@ -44,6 +45,7 @@ const schema = z
 type FormFields = z.infer<typeof schema>;
 
 const StudentSignup = () => {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -68,7 +70,7 @@ const StudentSignup = () => {
   return (
     <Stack margin={5} alignItems="center">
       <Typography variant="h2">Signup as a student</Typography>
-      <Box margin={5}>
+      <Box margin={3}>
         <form noValidate onSubmit={handleSubmit(onSubmit)}>
           <Stack spacing={2} width={400}>
             <TextField
@@ -131,17 +133,25 @@ const StudentSignup = () => {
               error={!!errors.confirmedPassword}
               helperText={errors.confirmedPassword?.message}
             />
+            {errors.root && (
+              <Alert severity="error">{errors.root.message}</Alert>
+            )}
             <Button
               type="submit"
               variant="contained"
               color="primary"
               disabled={isSubmitting}
             >
-              {isSubmitting ? "Loading..." : "Login"}
+              {isSubmitting ? "Loading..." : "Signup"}
             </Button>
-            {errors.root && (
-              <Alert severity="error">{errors.root.message}</Alert>
-            )}
+            <Button
+              variant="contained"
+              color="primary"
+              disabled={isSubmitting}
+              onClick={() => navigate(-1)}
+            >
+              Go Back
+            </Button>
           </Stack>
         </form>
       </Box>
