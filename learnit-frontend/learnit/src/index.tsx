@@ -18,59 +18,37 @@ import InstructorSignup from "./components/instructor/InstructorSignup";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: (
-      <App>
-        <ChooseUserType />
-      </App>
-    ),
-  },
-  {
-    path: "/student",
-    element: (
-      <App>
-        <Student />
-      </App>
-    ),
-  },
-  {
-    path: "/instructor",
-    element: (
-      <App>
-        <Instructor />
-      </App>
-    ),
-  },
-  {
-    path: "/student/login",
-    element: (
-      <App>
-        <Login />
-      </App>
-    ),
-  },
-  {
-    path: "/student/signup",
-    element: (
-      <App>
-        <StudentSignup />
-      </App>
-    ),
-  },
-  {
-    path: "/instructor/signup",
-    element: (
-      <App>
-        <InstructorSignup />
-      </App>
-    ),
-  },
-  {
-    path: "/instructor/login",
-    element: (
-      <App>
-        <Login />
-      </App>
-    ),
+    element: <App />,
+    children: [
+      {
+        path: "/",
+        element: <ChooseUserType />,
+      },
+      {
+        path: "student",
+        element: <Student />,
+      },
+      {
+        path: "instructor",
+        element: <Instructor />,
+      },
+      {
+        path: "/student/login",
+        element: <Login />,
+      },
+      {
+        path: "/student/signup",
+        element: <StudentSignup />,
+      },
+      {
+        path: "/instructor/signup",
+        element: <InstructorSignup />,
+      },
+      {
+        path: "/instructor/login",
+        element: <Login />,
+      },
+    ],
   },
 ]);
 
