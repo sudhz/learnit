@@ -1,9 +1,10 @@
-import { AppBar, IconButton, Toolbar } from "@mui/material";
+import { AppBar, IconButton, Toolbar, Container } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import SchoolIcon from "@mui/icons-material/School";
 import "./App.css";
 import { Link } from "react-router-dom";
 import { Outlet } from "react-router-dom";
+import { Instagram, Twitter } from "@mui/icons-material";
 
 function App() {
   return (
@@ -38,6 +39,18 @@ function App() {
       <main>
         <Outlet />
       </main>
+      <AppBar color="primary" position="fixed" sx={{ top: 'auto', bottom: 0, padding: 1}}>
+      <Toolbar>
+        <Container maxWidth="sm">
+          <Typography variant="body2" color="inherit" align="center"  gutterBottom >
+            Contact Details: contact@learnit.com | Phone: 123-456-7890
+          </Typography>
+          <Typography variant="body2" color="inherit" align="center" >
+            Address: Dayforce, Azure Building, Banaglore
+          </Typography>
+        </Container>
+      </Toolbar>
+    </AppBar>
     </>
   );
 }
