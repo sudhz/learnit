@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\Learnit-Backend.props" />
+</Project>
