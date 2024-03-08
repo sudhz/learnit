@@ -1,37 +1,69 @@
+using Learnit_Backend.Data;
+using Learnit_Backend.Models;
+// using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Learnit_Backend.Data; // Adjust the namespace according to your project structure
-using Learnit_Backend.Models; // Adjust the namespace according to your project structure
 using Microsoft.EntityFrameworkCore;
-
-
-namespace Learnit_Backend.Controllers // Adjust the namespace according to your project structure
+namespace Learnit_Backend.Controllers
 {
-    public class InstructorController(LearnitDbContext context) : Controller
+    [Route("api/[controller]")]
+    [ApiController]
+    public class InstructorController : ControllerBase
     {
-        private readonly LearnitDbContext _context = context;
-
-        // GET: Instructor/Index
-        public async Task<IActionResult> Index()
+        private readonly LearnitDbContext _context;
+        public InstructorController(LearnitDbContext context)
         {
-            List<Instructor> instructors = await _context.Instructors.ToListAsync();
-            return View(instructors);
+            _context = context;
+        }
+        [HttpPost]
+        public async Task<ActionResult<Instructor>> CreateStudent(Instructor instructor)
+        {
+            _context.Instructors.Add(instructor);
+            await _context.SaveChangesAsync();
+            return CreatedAtAction(nameof(Instructor), new { id = instructor.Id }, instructor);
+        }
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateInstructor(int id, Instructor instructor)
+        {
+            if (id != instructor.Id)
+            {
+                return BadRequest();
+            }
+            _context.Entry(instructor).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+            return NoContent();
         }
 
-        // GET: Instructor/Details/5
-        public async Task<IActionResult> Details(int? id)
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Instructor>> GetInstructor(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var instructor = await _context.Instructors.FirstOrDefaultAsync(m => m.Id == id);
+            var instructor = await _context.Instructors.FindAsync(id);
+        
             if (instructor == null)
             {
                 return NotFound();
             }
-
-            return View(instructor);
+        
+            return instructor;
+        }
+        
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteInstructor(int id)
+        {
+            var instructor = await _context.Instructors.FindAsync(id);
+            if (instructor == null)
+            {
+                return NotFound();
+            }
+        
+            _context.Instructors.Remove(instructor);
+            await _context.SaveChangesAsync();
+        
+            return NoContent();
+        }
+        // Other CRUD endpoints (GET, DELETE) can be added similarly...
+        private bool InstructorExists(int id)
+        {
+            return _context.Instructors.Any(e => e.Id == id);
         }
     }
 }
