@@ -38,6 +38,34 @@ namespace Learnit_Backend.Controllers
             Console.WriteLine(student.Name.ToString());
             return NoContent();
         }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Student>> GetStudent(int id)
+        {
+            var student = await _context.Students.FindAsync(id);
+        
+            if (student == null)
+            {
+                return NotFound();
+            }
+        
+            return student;
+        }
+        
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteStudent(int id)
+        {
+            var student = await _context.Students.FindAsync(id);
+            if (student == null)
+            {
+                return NotFound();
+            }
+        
+            _context.Students.Remove(student);
+            await _context.SaveChangesAsync();
+        
+            return NoContent();
+        }
  
         // Other CRUD endpoints (GET, DELETE) can be added similarly...
  
