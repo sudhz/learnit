@@ -59,10 +59,6 @@ const router = createBrowserRouter([
         path: "course/:id",
         element: <CourseDetailPage />,
       },
-      {
-        path: "coursedescription",
-        element: <CourseDescription />,
-      },
     ],
   },
 ]);
