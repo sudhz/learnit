@@ -36,15 +36,15 @@ function App() {
         </AppBar>
       </header>
       <main>
-        <Box sx={{padding: 5}}>
-        <Outlet />
+        <Box sx={{ padding: 5 }}>
+          <Outlet />
         </Box>
       </main>
       <footer>
         <AppBar
           color="primary"
           position="static"
-          sx={{ top: "auto", bottom: 0, padding: 3}}
+          sx={{ top: "auto", bottom: 0, padding: 3 }}
         >
           <Toolbar>
             <Container maxWidth="sm">
