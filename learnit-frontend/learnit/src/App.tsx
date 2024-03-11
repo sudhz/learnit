@@ -47,7 +47,7 @@ function App() {
           sx={{ top: "auto", bottom: 0, padding: 3 }}
         >
           <Toolbar>
-            <Container maxWidth="sm">
+            <Container>
               <Typography
                 variant="body2"
                 color="inherit"
