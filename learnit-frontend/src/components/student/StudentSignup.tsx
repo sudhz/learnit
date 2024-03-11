@@ -68,7 +68,8 @@ const StudentSignup = () => {
       };
       const response = await updateStudent(studentObj);
       console.log(response);
-      navigate("/student/home");
+      alert("Signup successfull!");
+      navigate("/student/login");
     } catch (error) {
       setError("root", {
         message: `An error occurred ${error}`,
