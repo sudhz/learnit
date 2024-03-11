@@ -14,7 +14,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { updateStudent } from "../../services/studentService";
+import { AddStudent } from "../../services/studentService";
 import Student from "../../model/student";
 
 const schema = z
@@ -66,7 +66,7 @@ const StudentSignup = () => {
         college: data.college ? data.college : null,
         password: data.password,
       };
-      const response = await updateStudent(studentObj);
+      const response = await AddStudent(studentObj);
       console.log(response);
       alert("Signup successfull!");
       navigate("/student/login");

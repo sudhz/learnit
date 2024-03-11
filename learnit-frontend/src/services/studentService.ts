@@ -1,7 +1,7 @@
 import axios from "axios";
 import Student from "../model/student";
 
-export const updateStudent = async (student: Student): Promise<Student> => {
+export const AddStudent = async (student: Student): Promise<Student> => {
   try {
     const data = JSON.stringify(student);
     const config = {
