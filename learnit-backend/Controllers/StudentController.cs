@@ -8,15 +8,10 @@ namespace Learnit_Backend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class StudentController : ControllerBase
+    public class StudentController(LearnitDbContext context) : ControllerBase
     {
-        private readonly LearnitDbContext _context;
- 
-        public StudentController(LearnitDbContext context)
-        {
-            _context = context;
-        }
- 
+        private readonly LearnitDbContext _context = context;
+
         [HttpPost]
         public async Task<ActionResult<Student>> CreateStudent(Student student)
         {

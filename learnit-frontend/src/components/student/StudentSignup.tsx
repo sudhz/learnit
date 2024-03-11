@@ -14,6 +14,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { updateStudent } from "../../services/studentService";
+import Student from "../../model/student";
 
 const schema = z
   .object({
@@ -57,12 +59,19 @@ const StudentSignup = () => {
 
   const onSubmit: SubmitHandler<FormFields> = async (data) => {
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      console.log(data);
-      throw new Error();
+      const studentObj: Student = {
+        name: data.name,
+        email: data.email,
+        phone: data.phone ? data.phone : null,
+        college: data.college ? data.college : null,
+        password: data.password,
+      };
+      const response = await updateStudent(studentObj);
+      console.log(response);
+      navigate("/student/home");
     } catch (error) {
       setError("root", {
-        message: "The error from the backend",
+        message: `An error occurred ${error}`,
       });
     }
   };
