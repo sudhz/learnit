@@ -17,6 +17,7 @@ import InstructorSignup from "./components/instructor/InstructorSignup";
 import CourseCatalogPage from "./components/CourseCatalogPage";
 import CourseDetailPage from "./components/CourseDetailPage";
 import CourseDescription from "./components/instructor/CourseDescription";
+import CourseBuilder from "./components/instructor/CourseBuilder";
 
 const router = createBrowserRouter([
   {
@@ -56,13 +57,17 @@ const router = createBrowserRouter([
         element: <CourseCatalogPage />,
       },
       {
+        path: "coursebuilder",
+        element: <CourseBuilder />,
+      },
+      {
         path: "course/:id",
         element: <CourseDetailPage />,
       },
       {
         path: "coursedescription",
         element: <CourseDescription />,
-      },
+      }
     ],
   },
 ]);
