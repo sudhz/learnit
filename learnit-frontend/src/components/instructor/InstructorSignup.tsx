@@ -14,6 +14,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
+import Instructor from "../../model/instructor";
+import { AddInstructor } from "../../services/instructorService";
 
 const schema = z
   .object({
@@ -56,12 +58,19 @@ const InstructorSignup = () => {
 
   const onSubmit: SubmitHandler<FormFields> = async (data) => {
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      console.log(data);
-      throw new Error();
+      const instructorObj: Instructor = {
+        name: data.name,
+        email: data.email,
+        phone: data.phone ? data.phone : null,
+        password: data.password,
+      };
+      const response = await AddInstructor(instructorObj);
+      console.log(response);
+      alert("Signup successfull!");
+      navigate("/instructor/login");
     } catch (error) {
       setError("root", {
-        message: "The error from the backend",
+        message: `${error}`,
       });
     }
   };

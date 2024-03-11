@@ -25,18 +25,29 @@ namespace Learnit_Backend // Adjust the namespace according to your project stru
         public void ConfigureServices(IServiceCollection services)
         {
             // Register the database context
-        // Register the database context
-        services.AddDbContext<LearnitDbContext>(options =>
-        {
-            options.UseSqlServer(Configuration.GetConnectionString("LearnitDatabase"), sqlServerOptions =>
-           {
-        // Ignore certificate validation errors
-            //sqlServerOptions.TrustServerCertificate(true);
-         });
-});
+            // Register the database context
+            services.AddDbContext<LearnitDbContext>(options =>
+            {
+                options.UseSqlServer(Configuration.GetConnectionString("LearnitDatabase"), sqlServerOptions =>
+               {
+                   // Ignore certificate validation errors
+                   //sqlServerOptions.TrustServerCertificate(true);
+               });
+            });
 
 
             services.AddControllersWithViews();
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAll", builder =>
+                {
+                    builder
+                    .AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -56,6 +67,8 @@ namespace Learnit_Backend // Adjust the namespace according to your project stru
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseCors("AllowAll");
 
             app.UseAuthorization();
 

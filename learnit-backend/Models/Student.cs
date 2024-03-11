@@ -17,11 +17,11 @@ namespace Learnit_Backend.Models // Adjust the namespace according to your proje
 
         // Column name will be "phone" in the database
         [Column("phone")]
-        public required string Phone { get; set; }
+        public string? Phone { get; set; }
 
         // Column name will be "college" in the database
         [Column("college")]
-        public string ?College { get; set; }
+        public string? College { get; set; }
 
         // Column name will be "password" in the database
         [Column("password")]

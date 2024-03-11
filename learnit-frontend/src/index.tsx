@@ -18,6 +18,8 @@ import CourseCatalogPage from "./components/CourseCatalogPage";
 import CourseDetailPage from "./components/CourseDetailPage";
 import CourseDescription from "./components/instructor/CourseDescription";
 import CourseBuilder from "./components/instructor/CourseBuilder";
+import StudentHome from "./components/student/StudentHome";
+import InstructorHome from "./components/instructor/InstructorHome";
 
 const router = createBrowserRouter([
   {
@@ -45,12 +47,20 @@ const router = createBrowserRouter([
         element: <StudentSignup />,
       },
       {
+        path: "student/home",
+        element: <StudentHome />,
+      },
+      {
         path: "instructor/signup",
         element: <InstructorSignup />,
       },
       {
         path: "instructor/login",
         element: <Login />,
+      },
+      {
+        path: "instructor/home",
+        element: <InstructorHome />,
       },
       {
         path: "courses",

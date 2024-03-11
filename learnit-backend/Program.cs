@@ -1,6 +1,3 @@
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Hosting;
-
 namespace Learnit_Backend // Adjust the namespace according to your project structure
 {
     public class Program
