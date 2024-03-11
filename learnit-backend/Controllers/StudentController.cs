@@ -51,6 +51,19 @@ namespace Learnit_Backend.Controllers
         
             return student;
         }
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Student>>> GetStudents()
+        {
+            var students = await _context.Students.ToListAsync();
+
+            if (students == null || !students.Any())
+            {
+                return NotFound();
+            }
+
+            return students;
+        }
+
         
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteStudent(int id)

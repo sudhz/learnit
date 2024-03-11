@@ -4500,11 +4500,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\case-study\\learnit-backend\\Learnit-Backend.csproj",
+      "projectUniqueName": "C:\\case-study\\learnit\\learnit-backend\\Learnit-Backend.csproj",
       "projectName": "Learnit-Backend",
-      "projectPath": "C:\\case-study\\learnit-backend\\Learnit-Backend.csproj",
+      "projectPath": "C:\\case-study\\learnit\\learnit-backend\\Learnit-Backend.csproj",
       "packagesPath": "C:\\Users\\P12B57D\\.nuget\\packages\\",
-      "outputPath": "C:\\case-study\\learnit-backend\\obj\\",
+      "outputPath": "C:\\case-study\\learnit\\learnit-backend\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\P12B57D\\AppData\\Roaming\\NuGet\\NuGet.Config",

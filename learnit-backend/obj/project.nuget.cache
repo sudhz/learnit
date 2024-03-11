@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "3ycEKWzbJ9c9SQSJIYX7pqmc1E1+yt8YX2BOOTtaonaw3c1r43wlV4UA3jMrPtfZFCLfezV6nRWuxE+B0m59zg==",
+  "dgSpecHash": "6p3/crLgT5+yiixUpWaKdH0LrJRqdDVZbb/c0KGh7JRKc8kx9Wt29UFRmKtwK/qnRUot+vR+KybXsAZcVboDAQ==",
   "success": true,
-  "projectFilePath": "C:\\case-study\\learnit-backend\\Learnit-Backend.csproj",
+  "projectFilePath": "C:\\case-study\\learnit\\learnit-backend\\Learnit-Backend.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\P12B57D\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
     "C:\\Users\\P12B57D\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",
