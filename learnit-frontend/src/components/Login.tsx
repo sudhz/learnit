@@ -11,9 +11,11 @@ import {
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useState } from "react";
+import { GetInstructors } from "../services/instructorService";
+import { GetStudents } from "../services/studentService";
 
 const schema = z.object({
   email: z.string().email(),
@@ -24,6 +26,7 @@ type FormFields = z.infer<typeof schema>;
 
 const Login = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const {
     register,
     handleSubmit,
@@ -35,12 +38,31 @@ const Login = () => {
 
   const onSubmit: SubmitHandler<FormFields> = async (data) => {
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      console.log(data);
-      throw new Error();
+      const instructors = await GetInstructors();
+      const students = await GetStudents();
+      let user = null;
+      if (location.pathname.includes("/instructor")) {
+        user = instructors.find(
+          (instructor) => instructor.email === data.email
+        );
+      } else {
+        user = students.find((student) => student.email === data.email);
+      }
+      if (!user) {
+        throw new Error("User with the email does not exist");
+      }
+      if (user.password !== data.password) {
+        throw new Error("Wrong password");
+      }
+      alert("Logged in successfully!");
+      navigate(
+        location.pathname.includes("/instructor")
+          ? "/instructor/home"
+          : "/student/home"
+      );
     } catch (error) {
       setError("root", {
-        message: "This email is already taken",
+        message: `${error}`,
       });
     }
   };
