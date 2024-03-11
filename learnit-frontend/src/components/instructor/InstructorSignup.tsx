@@ -70,7 +70,7 @@ const InstructorSignup = () => {
       navigate("/instructor/login");
     } catch (error) {
       setError("root", {
-        message: `An error occurred ${error}`,
+        message: `${error}`,
       });
     }
   };
