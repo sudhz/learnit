@@ -67,6 +67,19 @@ namespace Learnit_Backend.Controllers
             return instructor;
         }
 
+        [HttpGet()]
+        public async Task<ActionResult<IEnumerable<Instructor>>> GetStudents()
+        {
+            var instructors = await _context.Instructors.ToListAsync();
+
+            if (instructors == null || !instructors.Any())
+            {
+                return NotFound();
+            }
+
+            return instructors;
+        }
+
         private bool InstructorExists(int id)
         {
             return _context.Instructors.Any(e => e.Id == id);
