@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Learnit-Backend")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+15dff9136201255342765ab321aae0088c9991ca")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+21b1c16b1545aa4a6d5cedc6f0f1681c6ead5b8b")]
 [assembly: System.Reflection.AssemblyProductAttribute("Learnit-Backend")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Learnit-Backend")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

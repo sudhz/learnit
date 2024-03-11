@@ -5,6 +5,7 @@ namespace Learnit_Backend.Models // Adjust the namespace according to your proje
     public class Instructor
     {
         // Primary key
+        [Column("id")]
         public int Id { get; set; }
 
         // Column name will be "name" in the database
@@ -22,6 +23,8 @@ namespace Learnit_Backend.Models // Adjust the namespace according to your proje
         // Column name will be "password" in the database
         [Column("password")]
         public required string Password { get; set; }
+
+        public virtual ICollection<Course>? Courses { get; set; }
 
         // Other properties...
     }

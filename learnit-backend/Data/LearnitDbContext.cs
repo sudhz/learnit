@@ -12,5 +12,14 @@ namespace Learnit_Backend.Data // Adjust the namespace according to your project
 
         public DbSet<Student> Students { get; set; }
         public DbSet<Instructor> Instructors { get; set; }
+        public DbSet<Course> Courses { get; set; }
+          protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            // Configuring a one-to-many relationship between Instructor and Course
+            modelBuilder.Entity<Instructor>()
+                .HasMany(i => i.Courses)
+                .WithOne(c => c.Instructors)
+                .HasForeignKey(c => c.I_id);
+        }
     }
 }
