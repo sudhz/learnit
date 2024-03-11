@@ -39,7 +39,7 @@ function App() {
       <main>
         <Outlet />
       </main>
-      <AppBar color="primary" position="fixed" sx={{ top: 'auto', bottom: 0, padding: 1}}>
+      <AppBar color="primary" position="static" sx={{ top: 'auto', bottom: 0, padding: 1}}>
       <Toolbar>
         <Container maxWidth="sm">
           <Typography variant="body2" color="inherit" align="center"  gutterBottom >
