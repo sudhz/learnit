@@ -1,3 +1,4 @@
+using System.Text.Json;
 using Learnit_Backend.Data;
 using Learnit_Backend.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -9,14 +10,9 @@ namespace Learnit_Backend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class InstructorController : ControllerBase
+    public class InstructorController(LearnitDbContext context) : ControllerBase
     {
-        private readonly LearnitDbContext _context;
-
-        public InstructorController(LearnitDbContext context)
-        {
-            _context = context;
-        }
+        private readonly LearnitDbContext _context = context;
 
         [HttpPost]
         public async Task<ActionResult<Instructor>> CreateStudent(Instructor instructor)
@@ -80,9 +76,36 @@ namespace Learnit_Backend.Controllers
             return instructors;
         }
 
-        private bool InstructorExists(int id)
+        [HttpPost("auth")]
+        public async Task<IActionResult> Auth([FromBody] JsonElement payload)
         {
-            return _context.Instructors.Any(e => e.Id == id);
+            var instructors = await _context.Instructors.ToListAsync();
+            try
+            {
+                string email = payload.GetProperty("email").ToString();
+                string password = payload.GetProperty("password").ToString();
+                foreach (var instructor in instructors)
+                {
+                    if (instructor.Email == email)
+                    {
+                        if (instructor.Password == password)
+                        {
+                            return Ok(new { id = instructor.Id });
+                        }
+                        else
+                        {
+                            return Unauthorized(new { message = "Invalid password" });
+                        }
+                    }
+                }
+                return NotFound(new { message = "The user with the email not found" });
+            }
+            catch (Exception)
+            {
+                return BadRequest(new { message = "Email or password not provided." });
+            }
+
+
         }
     }
 }

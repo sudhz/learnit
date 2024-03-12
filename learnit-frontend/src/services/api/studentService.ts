@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-import Student from "../model/student";
+import Student from "../../model/student";
 
 export const AddStudent = async (student: Student): Promise<Student> => {
   try {
@@ -33,6 +33,32 @@ export const GetStudents = async () => {
   } catch (error) {
     if (axios.isAxiosError(error)) {
       throw new Error(error.message);
+    } else {
+      throw new Error("Unknown error");
+    }
+  }
+};
+
+export const AuthStudent = async (email: string, password: string) => {
+  try {
+    const data = JSON.stringify({
+      email: email,
+      password: password,
+    });
+    const config = {
+      method: "post",
+      maxBodyLength: Infinity,
+      url: "http://localhost:5292/api/student/auth",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: data,
+    };
+    const response = await axios.request(config);
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(error.response?.data.message);
     } else {
       throw new Error("Unknown error");
     }

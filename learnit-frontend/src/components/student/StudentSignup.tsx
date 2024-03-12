@@ -14,7 +14,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { AddStudent } from "../../services/studentService";
+import { AddStudent } from "../../services/api/studentService";
 import Student from "../../model/student";
 
 const schema = z

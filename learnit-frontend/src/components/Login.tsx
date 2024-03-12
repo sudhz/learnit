@@ -14,8 +14,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useState } from "react";
-import { GetInstructors } from "../services/instructorService";
-import { GetStudents } from "../services/studentService";
+import { AuthInstructor } from "../services/api/instructorService";
+import { AuthStudent } from "../services/api/studentService";
+import { useAuthContext } from "../services/context/authContext";
+import { AxiosError } from "axios";
 
 const schema = z.object({
   email: z.string().email(),
@@ -27,6 +29,7 @@ type FormFields = z.infer<typeof schema>;
 const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { auth, setAuth } = useAuthContext();
   const {
     register,
     handleSubmit,
@@ -38,32 +41,23 @@ const Login = () => {
 
   const onSubmit: SubmitHandler<FormFields> = async (data) => {
     try {
-      const instructors = await GetInstructors();
-      const students = await GetStudents();
-      let user = null;
-      if (location.pathname.includes("/instructor")) {
-        user = instructors.find(
-          (instructor) => instructor.email === data.email
-        );
-      } else {
-        user = students.find((student) => student.email === data.email);
-      }
-      if (!user) {
-        throw new Error("User with the email does not exist");
-      }
-      if (user.password !== data.password) {
-        throw new Error("Wrong password");
-      }
-      alert("Logged in successfully!");
+      const id = location.pathname.includes("/instructor")
+        ? await AuthInstructor(data.email, data.password)
+        : await AuthStudent(data.email, data.password);
+      console.log(id);
       navigate(
         location.pathname.includes("/instructor")
           ? "/instructor/home"
           : "/student/home"
       );
+      setAuth({ id: id, isLoggedIn: true });
+      alert("Logged in successfully!");
     } catch (error) {
-      setError("root", {
-        message: `${error}`,
-      });
+      if (error instanceof Error) {
+        setError("root", {
+          message: `${error.message}`,
+        });
+      }
     }
   };
   const [showPassword, setShowPassword] = useState(false);

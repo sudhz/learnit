@@ -15,7 +15,7 @@ import { useState } from "react";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import Instructor from "../../model/instructor";
-import { AddInstructor } from "../../services/instructorService";
+import { AddInstructor } from "../../services/api/instructorService";
 
 const schema = z
   .object({
