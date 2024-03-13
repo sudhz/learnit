@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { TextField, Button, Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
+import axios from 'axios';
 
 const VideoUploadForm: React.FC = () => {
   const [videoName, setVideoName] = useState('');
@@ -8,8 +9,8 @@ const VideoUploadForm: React.FC = () => {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    handleOpenDialog(); // Open the dialog when the component mounts
-  }, []); // Empty dependency array ensures this effect runs only once
+    handleOpenDialog(); 
+  }, []); 
 
   const handleOpenDialog = () => {
     setOpen(true);
@@ -31,17 +32,32 @@ const VideoUploadForm: React.FC = () => {
     if (event.target.files && event.target.files.length > 0) {
       const file = event.target.files[0];
       setSelectedFile(file);
-      setVideoLink(file.name); // Display file name as URL
+      setVideoLink(file.name); 
     }
   };
 
   const handleVideoUpload = () => {
-    // Handle video upload logic
-    console.log('Video Name:', videoName);
-    console.log('Video Link:', videoLink);
-    console.log('Selected File:', selectedFile);
-    setOpen(false);
-  };
+    const data = {
+      C_Id: 20, 
+      VideoLink: videoLink,
+      VideoName: videoName,
+    };
+
+    axios.post('http://localhost:5292/api/AddVideo', data, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    .then((response) => {
+      console.log(response.data);
+      setOpen(false);
+      window.alert('Video added successfully'); 
+    })
+    .catch((error) => {
+      console.error(error);
+      window.alert('Error adding video'); 
+    });
+ };
 
   return (
     <>

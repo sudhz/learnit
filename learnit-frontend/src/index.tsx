@@ -24,6 +24,8 @@ import UpdateProfile from "./components/instructor/UpdateProfile";
 import AuthContextProvider from "./services/context/auth/AuthContextProvider";
 import ProtectedRoute from "./components/ProtectedRoute";
 import CourseDiscussion from "./components/CourseDiscussion";
+import Video from "./components/instructor/Video";
+import MyProfile from "./components/instructor/Myprofile";
 
 const router = createBrowserRouter([
   {
@@ -87,13 +89,18 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "coursebuilder",
+        path: "/instructor/home/coursebuilder",
         element: (
           <ProtectedRoute>
             <CourseBuilder />
           </ProtectedRoute>
         ),
       },
+        {
+          path: "instructor/home/coursebuilder/video",
+          element: <Video />,
+        },
+      
       {
         path: "course/:id",
         element: (
@@ -111,11 +118,19 @@ const router = createBrowserRouter([
         element: <CourseDiscussion />,
       },
       {
-        path: "updateinstructor/:id",
+        path: "/instructor/home/myprofile/updateprofile/:id",
         element: (
           <ProtectedRoute>
             <UpdateProfile />
           </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/instructor/home/myprofile",
+        element: (
+          
+            <MyProfile />
+          
         ),
       },
     ],
