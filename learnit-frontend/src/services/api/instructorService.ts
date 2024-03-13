@@ -56,6 +56,35 @@ export const GetInstructor = async (id: number): Promise<Instructor> => {
   }
 };
 
+export const UpdateInstructor = async (newDetails: Instructor) => {
+  try {
+    const data = JSON.stringify({
+      id: newDetails.id,
+      name: newDetails.name,
+      email: newDetails.email,
+      phone: newDetails.phone,
+      password: newDetails.password,
+    });
+    const config = {
+      method: "put",
+      maxBodyLength: Infinity,
+      url: `http://localhost:5292/api/instructor/${newDetails.id}`,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: data,
+    };
+    const response = await axios.request(config);
+    return response;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(error.message);
+    } else {
+      throw new Error("Unknown error");
+    }
+  }
+};
+
 export const AuthInstructor = async (email: string, password: string) => {
   try {
     const data = JSON.stringify({

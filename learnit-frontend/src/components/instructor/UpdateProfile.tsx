@@ -10,19 +10,18 @@ import {
   Typography,
 } from "@mui/material";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { number, z } from "zod";
+import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useNavigate, useParams } from "react-router-dom";
-import axios from "axios";
 import Instructor from "../../model/instructor";
-import { GetInstructor } from "../../services/api/instructorService";
-// import { UpdateInstructor } from "./UpdateInstructor";
+import {
+  GetInstructor,
+  UpdateInstructor,
+} from "../../services/api/instructorService";
 
-// Define the schema for validation
 const schema = z
   .object({
-    // id: z.string(),
     name: z.string(),
     email: z.string().email(),
     phone: z
@@ -74,23 +73,37 @@ const UpdateProfile: React.FC = () => {
     formState: { errors, isSubmitting },
     reset,
   } = useForm<FormFields>({
-    resolver: zodResolver(schema), // Set the default values here
+    resolver: zodResolver(schema),
   });
   useEffect(() => {
     reset({
-      // name: instructor.name || "",
-      // email: instructor.email || "",
       phone: instructor.phone || "",
-      // Reset other fields as necessary
     });
   }, [instructor, reset]);
 
   const onSubmit: SubmitHandler<FormFields> = async (data: FormFields) => {
     try {
-      // TODO
+      if (!id) {
+        throw new Error("id route parameter missing");
+      }
+      const updatedDetails: Instructor = {
+        id: +id,
+        name: data.name,
+        email: data.email,
+        phone: data.phone || null,
+        password: data.confirmNewPassword,
+      };
+      const response = await UpdateInstructor(updatedDetails);
+      console.log(response);
+      if (response.status === 204) {
+        alert("Updated profile details successfully!");
+        navigate("/instructor/home");
+      } else {
+        throw new Error(response.statusText);
+      }
     } catch (error) {
       setError("root", {
-        message: "The error from the backend",
+        message: `${error}`,
       });
     }
   };
@@ -99,7 +112,7 @@ const UpdateProfile: React.FC = () => {
 
   return (
     <Stack margin={5} alignItems="center">
-      <Typography variant="h5" sx={{ color: "pr     imary.main", fontWeight: 600 }}>
+      <Typography variant="h5" sx={{ color: "primary.main", fontWeight: 600 }}>
         Update Profile Details
       </Typography>
       <Box margin={3}>
@@ -128,6 +141,7 @@ const UpdateProfile: React.FC = () => {
               type="number"
               error={!!errors.phone}
               helperText={errors.phone?.message}
+              focused
             />
             <Typography
               variant="h5"
