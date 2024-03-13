@@ -3,6 +3,7 @@ import React, { createContext } from "react";
 export interface Auth {
   id: number | undefined;
   isLoggedIn: boolean;
+  user: "student" | "instructor" | undefined;
 }
 
 export interface AuthContextType {

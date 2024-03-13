@@ -21,11 +21,17 @@ import CourseBuilder from "./components/instructor/CourseBuilder";
 import StudentHome from "./components/student/StudentHome";
 import InstructorHome from "./components/instructor/InstructorHome";
 import UpdateProfile from "./components/instructor/UpdateProfile";
+import AuthContextProvider from "./services/context/auth/AuthContextProvider";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
+    element: (
+      <AuthContextProvider>
+        <App />
+      </AuthContextProvider>
+    ),
     children: [
       {
         path: "/",
@@ -49,7 +55,11 @@ const router = createBrowserRouter([
       },
       {
         path: "student/home",
-        element: <StudentHome />,
+        element: (
+          <ProtectedRoute>
+            <StudentHome />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "instructor/signup",
@@ -61,27 +71,51 @@ const router = createBrowserRouter([
       },
       {
         path: "instructor/home",
-        element: <InstructorHome />,
+        element: (
+          <ProtectedRoute>
+            <InstructorHome />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "courses",
-        element: <CourseCatalogPage />,
+        element: (
+          <ProtectedRoute>
+            <CourseCatalogPage />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "coursebuilder",
-        element: <CourseBuilder />,
+        element: (
+          <ProtectedRoute>
+            <CourseBuilder />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "course/:id",
-        element: <CourseDetailPage />,
+        element: (
+          <ProtectedRoute>
+            <CourseDetailPage />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "coursedescription",
-        element: <CourseDescription />,
+        element: (
+          <ProtectedRoute>
+            <CourseDescription />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "updateinstructor/:id",
-        element: <UpdateProfile />,
+        element: (
+          <ProtectedRoute>
+            <UpdateProfile />
+          </ProtectedRoute>
+        ),
       },
     ],
   },

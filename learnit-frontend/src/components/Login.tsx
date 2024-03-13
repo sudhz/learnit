@@ -43,7 +43,13 @@ const Login = () => {
       const id = location.pathname.includes("/instructor")
         ? await AuthInstructor(data.email, data.password)
         : await AuthStudent(data.email, data.password);
-      setAuth({ id: id, isLoggedIn: true });
+      setAuth({
+        id: id,
+        isLoggedIn: true,
+        user: location.pathname.includes("/instructor")
+          ? "instructor"
+          : "student",
+      });
       navigate(
         location.pathname.includes("/instructor")
           ? "/instructor/home"
