@@ -20,11 +20,16 @@ import CourseDescription from "./components/instructor/CourseDescription";
 import CourseBuilder from "./components/instructor/CourseBuilder";
 import StudentHome from "./components/student/StudentHome";
 import InstructorHome from "./components/instructor/InstructorHome";
+import AuthContextProvider from "./services/context/auth/AuthContextProvider";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
+    element: (
+      <AuthContextProvider>
+        <App />
+      </AuthContextProvider>
+    ),
     children: [
       {
         path: "/",
@@ -75,9 +80,9 @@ const router = createBrowserRouter([
         element: <CourseDetailPage />,
       },
       {
-        path: "coursedescription",
+        path: "coursedescription/:id",
         element: <CourseDescription />,
-      }
+      },
     ],
   },
 ]);

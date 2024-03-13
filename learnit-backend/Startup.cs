@@ -85,6 +85,11 @@ namespace Learnit_Backend // Adjust the namespace according to your project stru
                     defaults: new { controller = "Instructor" });
 
                 endpoints.MapControllerRoute(
+                    name: "course",
+                    pattern: "Course/{action=Index}/{id?}",
+                    defaults: new { controller = "Course" });
+
+                endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
