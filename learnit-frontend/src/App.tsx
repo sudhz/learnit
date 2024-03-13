@@ -36,7 +36,7 @@ function App() {
         </AppBar>
       </header>
       <main>
-        <Box sx={{ padding: 5 }}>
+        <Box sx={{ pt: 5 }}>
           <Outlet />
         </Box>
       </main>

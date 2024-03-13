@@ -102,12 +102,8 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "coursedescription",
-        element: (
-          <ProtectedRoute>
-            <CourseDescription />
-          </ProtectedRoute>
-        ),
+        path: "coursedescription/:id",
+        element: <CourseDescription />,
       },
       {
         path: "updateinstructor/:id",
