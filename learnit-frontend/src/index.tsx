@@ -17,6 +17,7 @@ import InstructorSignup from "./components/instructor/InstructorSignup";
 import CourseCatalogPage from "./components/CourseCatalogPage";
 import CourseDetailPage from "./components/CourseDetailPage";
 import CourseDescription from "./components/instructor/CourseDescription";
+import OnlinePaymentPage from "./components/OnlinePaymentPage";
 
 const router = createBrowserRouter([
   {
@@ -63,6 +64,10 @@ const router = createBrowserRouter([
         path: "coursedescription",
         element: <CourseDescription />,
       },
+      {
+        path:"OnlinePaymentPage",
+        element:<OnlinePaymentPage/>
+      }
     ],
   },
 ]);

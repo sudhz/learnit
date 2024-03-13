@@ -253,7 +253,7 @@ const CourseDetailPage: React.FC = () => {
             <div>
               <FontAwesomeIcon icon={faClock} style={{ color: '#3498db' }} /> {duration}
               &nbsp;&nbsp;&nbsp;&nbsp;
-              <Link to="/Payment">
+              <Link to="/OnlinePaymentPage">
                 <button style={orderButtonStyle}>ORDER NOW</button>
               </Link>
              &nbsp;&nbsp;&nbsp;
