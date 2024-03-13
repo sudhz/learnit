@@ -39,6 +39,21 @@ export const GetStudents = async () => {
   }
 };
 
+export const GetStudent = async (id: number): Promise<Student> => {
+  try {
+    const response: AxiosResponse<Student> = await axios.get(
+      `http://localhost:5292/api/student/${id}`
+    );
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(error.message);
+    } else {
+      throw new Error("Unknown error");
+    }
+  }
+};
+
 export const AuthStudent = async (email: string, password: string) => {
   try {
     const data = JSON.stringify({
