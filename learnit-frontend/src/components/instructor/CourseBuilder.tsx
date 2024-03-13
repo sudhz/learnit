@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
  Box,
  Button,
@@ -10,10 +10,16 @@ import {
  TextField,
  Typography,
  Stack,
+ Dialog,
+ DialogTitle,
+ DialogActions,
+ DialogContent,
+ DialogContentText,
 } from '@mui/material';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form'; // Import Controller
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useNavigate } from 'react-router-dom';
  
 // Define the schema for validation
 const schema = z.object({
@@ -40,7 +46,61 @@ const schema = z.object({
  
 type FormFields = z.infer<typeof schema>;
  
-const CourseBuilder = () => {
+const CourseBuilder : React.FC = () => {
+  const navigate = useNavigate();
+  const [open, setOpen] = useState(false);
+  const [selectedOption, setSelectedOption] = useState('');
+  const [selectedRadio, setSelectedRadio] = useState('');
+ 
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+ 
+  const handleClose = () => {
+    setOpen(false);
+  };
+ 
+ 
+  const handleRadioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSelectedRadio(event.currentTarget.value);
+  };
+ 
+  const handleConfirm = () => {
+    
+    // Route to different components based on selected choice
+    switch (selectedRadio) {
+      case 'option1':
+        {
+          navigate('/instructor/home/coursebuilder/video');
+         
+        }
+        break;
+      case 'option2':
+        {
+          navigate('/instructor/home/coursebuilder/Assignment');
+        }
+        break;
+      case 'option3':
+         {
+          navigate('/instructor/home/coursebuilder/quiz');
+        }
+        break;
+      default:
+        break;
+    }
+    // Close the dialog
+    handleClose();
+  };
+  const navigator = (path: string) => {
+    // Navigate to the specified path
+    window.location.href = path;
+  };
+  // useEffect(() => {
+  //   handleOpenDialogue();
+  // }, []);
+  // const handleOpenDialogue =() => {
+  //   setOpen(true);
+  // };
  const {
     register,
     handleSubmit,
@@ -112,10 +172,41 @@ const CourseBuilder = () => {
               label="Course Content"
               type="text"
               multiline
-              rows={4}
+              rows={1}
               error={!!errors.content}
               helperText={errors.content?.message}
             />
+            
+            <Button variant="outlined" onClick={handleClickOpen}>
+             Add Item
+            </Button> 
+            <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">New Item</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Upload Or Create
+          </DialogContentText>
+         
+         
+          <RadioGroup aria-label="items" name="items1" value={selectedRadio} onChange={handleRadioChange}>
+            <FormControlLabel value="option1" control={<Radio />} label="Video" />
+            <FormControlLabel value="option2" control={<Radio />} label="Assignment" />
+            <FormControlLabel value="option3" control={<Radio />} label="Quiz" />
+          </RadioGroup>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={handleConfirm} autoFocus>
+            OK
+          </Button>
+        </DialogActions>
+      </Dialog>
+      
             <Button type="submit" variant="contained" color="primary">Create Course</Button>
           </Stack>
         </form>

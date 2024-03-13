@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { Box, Typography, TextField, Grid, Button, Stack } from "@mui/material";
+import { Box, Typography, TextField, Grid, Button, Stack, Dialog, DialogContent } from "@mui/material";
 import { Link } from "react-router-dom";
+// import UploadItem from "./UploadItem";
 
 const CourseDescription: React.FC = () => {
   const [description, setDescription] = useState("");
@@ -12,6 +13,8 @@ const CourseDescription: React.FC = () => {
   };
 
   return (
+    <div>
+      
     <Box display="flex" height="100vh" width="100%" gap={2}>
       {/* Sidebar */}
       <Box width="20%" padding={2} height="100%" sx={{ bgcolor: "#1976d2" }}>
@@ -55,9 +58,11 @@ const CourseDescription: React.FC = () => {
           <Button variant="contained" color="primary" size="large">
             Save
           </Button>
+          {/* <UploadItem/> */}
         </Grid>
       </Box>
     </Box>
+    </div>
   );
 };
 export default CourseDescription;

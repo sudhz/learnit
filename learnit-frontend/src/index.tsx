@@ -20,6 +20,10 @@ import CourseDescription from "./components/instructor/CourseDescription";
 import CourseBuilder from "./components/instructor/CourseBuilder";
 import StudentHome from "./components/student/StudentHome";
 import InstructorHome from "./components/instructor/InstructorHome";
+import UpdateProfile from "./components/instructor/UpdateProfile";
+import MyProfile from "./components/instructor/Myprofile";
+import VideoUploadForm from "./components/instructor/Video";
+import AddAssignmentForm from "./components/instructor/Assignment";
 
 const router = createBrowserRouter([
   {
@@ -67,7 +71,7 @@ const router = createBrowserRouter([
         element: <CourseCatalogPage />,
       },
       {
-        path: "coursebuilder",
+        path: "instructor/home/coursebuilder",
         element: <CourseBuilder />,
       },
       {
@@ -77,7 +81,24 @@ const router = createBrowserRouter([
       {
         path: "coursedescription",
         element: <CourseDescription />,
-      }
+      },
+      {
+        path: "instructor/home/myprofile/updateprofile",
+        element: <UpdateProfile />,
+      },
+      {
+        path: "instructor/home/myprofile",
+        element: <MyProfile/>,
+      },
+      {
+        path: "instructor/home/coursebuilder/video",
+        element: <VideoUploadForm />,
+      },
+      {
+        path: "instructor/home/coursebuilder/Assignment",
+        element: <AddAssignmentForm />,
+      },
+      
     ],
   },
 ]);
