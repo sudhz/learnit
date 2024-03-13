@@ -18,6 +18,19 @@ namespace Learnit_Backend.Controllers
             _context = context;
         }
 
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Course>>> GetCourses()
+        {
+            var courses = await _context.Courses.ToListAsync();
+
+            if (courses == null || !courses.Any())
+            {
+                return NotFound();
+            }
+
+            return courses;
+        }
+
         [HttpPost]
         public async Task<ActionResult<Course>> CreateCourse(Course course)
         {
