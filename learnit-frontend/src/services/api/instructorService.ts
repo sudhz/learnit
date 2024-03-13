@@ -41,6 +41,21 @@ export const GetInstructors = async (): Promise<Instructor[]> => {
   }
 };
 
+export const GetInstructor = async (id: number): Promise<Instructor> => {
+  try {
+    const response: AxiosResponse<Instructor> = await axios.get(
+      `http://localhost:5292/api/instructor/${id}`
+    );
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(error.message);
+    } else {
+      throw new Error("Unknown error");
+    }
+  }
+};
+
 export const AuthInstructor = async (email: string, password: string) => {
   try {
     const data = JSON.stringify({
