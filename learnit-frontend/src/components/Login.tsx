@@ -53,7 +53,8 @@ const Login = () => {
       navigate(
         location.pathname.includes("/instructor")
           ? "/instructor/home"
-          : "/student/home"
+          : "/student/home",
+        { replace: true }
       );
       alert("Logged in successfully!");
     } catch (error) {

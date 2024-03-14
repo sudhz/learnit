@@ -1,16 +1,24 @@
-import React, { useState, useEffect } from 'react';
-import { TextField, Button, Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
-import axios from 'axios';
+import React, { useState, useEffect, useContext } from "react";
+import {
+  TextField,
+  Button,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+} from "@mui/material";
+import axios from "axios";
+import { AuthContext } from "../../services/context/auth/authContext";
 
 const VideoUploadForm: React.FC = () => {
-  const [videoName, setVideoName] = useState('');
-  const [videoLink, setVideoLink] = useState('');
+  const [videoName, setVideoName] = useState("");
+  const [videoLink, setVideoLink] = useState("");
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [open, setOpen] = useState(false);
-
+  const { auth } = useContext(AuthContext);
   useEffect(() => {
-    handleOpenDialog(); 
-  }, []); 
+    handleOpenDialog();
+  }, []);
 
   const handleOpenDialog = () => {
     setOpen(true);
@@ -20,11 +28,15 @@ const VideoUploadForm: React.FC = () => {
     setOpen(false);
   };
 
-  const handleVideoNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleVideoNameChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     setVideoName(event.target.value);
   };
 
-  const handleVideoLinkChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleVideoLinkChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     setVideoLink(event.target.value);
   };
 
@@ -32,32 +44,33 @@ const VideoUploadForm: React.FC = () => {
     if (event.target.files && event.target.files.length > 0) {
       const file = event.target.files[0];
       setSelectedFile(file);
-      setVideoLink(file.name); 
+      setVideoLink(file.name);
     }
   };
 
   const handleVideoUpload = () => {
     const data = {
-      C_Id: 20, 
+      C_Id: 20,
       VideoLink: videoLink,
       VideoName: videoName,
     };
 
-    axios.post('http://localhost:5292/api/AddVideo', data, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-    .then((response) => {
-      console.log(response.data);
-      setOpen(false);
-      window.alert('Video added successfully'); 
-    })
-    .catch((error) => {
-      console.error(error);
-      window.alert('Error adding video'); 
-    });
- };
+    axios
+      .post("http://localhost:5292/api/AddVideo", data, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
+        console.log(response.data);
+        setOpen(false);
+        window.alert("Video added successfully");
+      })
+      .catch((error) => {
+        console.error(error);
+        window.alert("Error adding video");
+      });
+  };
 
   return (
     <>
@@ -70,7 +83,7 @@ const VideoUploadForm: React.FC = () => {
             onChange={handleVideoNameChange}
             fullWidth
             margin="normal"
-            style={{ marginBottom: '16px' }}
+            style={{ marginBottom: "16px" }}
           />
           <TextField
             label="Video Link"
@@ -78,12 +91,24 @@ const VideoUploadForm: React.FC = () => {
             onChange={handleVideoLinkChange}
             fullWidth
             margin="normal"
-            style={{ marginBottom: '16px' }}
+            style={{ marginBottom: "16px" }}
           />
-          <input type="file" style={{ display: 'none' }} onChange={handleFileChange} />
-          <Button variant="contained" component="label" style={{ marginBottom: '16px' }}>
+          <input
+            type="file"
+            style={{ display: "none" }}
+            onChange={handleFileChange}
+          />
+          <Button
+            variant="contained"
+            component="label"
+            style={{ marginBottom: "16px" }}
+          >
             Browse
-            <input type="file" style={{ display: 'none' }} onChange={handleFileChange} />
+            <input
+              type="file"
+              style={{ display: "none" }}
+              onChange={handleFileChange}
+            />
           </Button>
         </DialogContent>
         <DialogActions>

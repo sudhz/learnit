@@ -21,7 +21,7 @@ const App: React.FC = () => {
   const location = useLocation();
   const renderProfileLink = location.pathname.startsWith("/instructor/home");
   const renderStudentLink = location.pathname.startsWith("/student/home");
-  const {auth} = useContext(AuthContext);
+  const { auth } = useContext(AuthContext);
   return (
     <>
       <header>
@@ -34,7 +34,15 @@ const App: React.FC = () => {
               aria-label="menu"
               sx={{ mr: 2 }}
             >
-              <Link to="/">
+              <Link
+                to={
+                  auth.isLoggedIn
+                    ? auth.user === "student"
+                      ? "student/home"
+                      : "instructor/home"
+                    : "/"
+                }
+              >
                 <div style={{ color: "white" }}>
                   <SchoolIcon color="inherit" />
                 </div>
@@ -44,7 +52,13 @@ const App: React.FC = () => {
               variant="h5"
               component={Link}
               sx={{ color: "white", textDecoration: "none" }}
-              to="/"
+              to={
+                auth.isLoggedIn
+                  ? auth.user === "student"
+                    ? "student/home"
+                    : "instructor/home"
+                  : "/"
+              }
             >
               Learnit
             </Typography>
@@ -114,7 +128,7 @@ const App: React.FC = () => {
                     size="large"
                     color="inherit"
                     component={Link}
-                    to="/instructor/home"
+                    to={`/instructor/home/profile/${auth.id}`}
                   >
                     <AccountCircleIcon />
                   </IconButton>
@@ -134,12 +148,11 @@ const App: React.FC = () => {
               sx={{ bgcolor: "#1976d2" }}
             >
               <Stack spacing={2} mt={5}>
-              
                 <Typography
                   variant="h5"
                   component={Link}
                   sx={{ color: "white", textDecoration: "none" }}
-                  to=""
+                  to="/student/home/courses"
                 >
                   My Courses
                 </Typography>
@@ -185,6 +198,5 @@ const App: React.FC = () => {
     </>
   );
 };
-
 
 export default App;

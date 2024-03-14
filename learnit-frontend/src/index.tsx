@@ -23,11 +23,11 @@ import InstructorHome from "./components/instructor/InstructorHome";
 import AuthContextProvider from "./services/context/auth/AuthContextProvider";
 import ProtectedRoute from "./components/ProtectedRoute";
 import StudentProfile from "./components/student/StudentProfile";
-import UpdateStudentProfile from "./components/student/UpdateStudentProfile";
 import CourseDiscussion from "./components/CourseDiscussion";
 import Video from "./components/instructor/Video";
-import MyProfile from "./components/instructor/Myprofile";
+import InstructorProfile from "./components/instructor/InstructorProfile";
 import UpdateInstructorProfile from "./components/instructor/UpdateInstructorProfile";
+import StudentCourses from "./components/student/StudentCourses";
 
 const router = createBrowserRouter([
   {
@@ -86,11 +86,11 @@ const router = createBrowserRouter([
           </ProtectedRoute>
         ),
       },
-        {
-          path: "instructor/home/coursebuilder/video",
-          element: <Video />,
-        },
-      
+      {
+        path: "instructor/home/coursebuilder/video",
+        element: <Video />,
+      },
+
       {
         path: "course/:id",
         element: <CourseDetailPage />,
@@ -116,12 +116,12 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/instructor/home/myprofile",
-        element: (
-          
-            <MyProfile />
-          
-        ),
+        path: "/instructor/home/profile/:id",
+        element: <InstructorProfile />,
+      },
+      {
+        path: "/student/home/courses",
+        element: <StudentCourses />,
       },
     ],
   },

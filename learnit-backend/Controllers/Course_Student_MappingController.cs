@@ -22,7 +22,7 @@ namespace Learnit_Backend.Controllers
         [HttpGet("course/{id}")]
         public IActionResult GetStudentsEnrolledForCourse(int id)
         {
-            var studentIds = _context.course_student_mapping
+            var studentIds = _context.Course_student_mappings
                                     .Where(mapping => mapping.C_Id == id)
                                     .Select(mapping => mapping.S_Id)
                                     .ToList();
@@ -34,17 +34,17 @@ namespace Learnit_Backend.Controllers
         [HttpGet("student/{id}")]
         public IActionResult GetCoursesEnrolledByStudent(int id)
         {
-            var courseIds = _context.course_student_mapping
+            var courseIds = _context.Course_student_mappings
                                    .Where(mapping => mapping.S_Id == id)
                                    .Select(mapping => mapping.C_Id)
                                    .ToList();
 
             return Ok(courseIds);
         }
-
+        
         private bool CourseStudentMappingExists(int courseId, int studentId)
         {
-            return _context.course_student_mapping.Any(e => e.C_Id == courseId && e.S_Id == studentId);
+            return _context.Course_student_mappings.Any(e => e.C_Id == courseId && e.S_Id == studentId);
         }
     }
 }

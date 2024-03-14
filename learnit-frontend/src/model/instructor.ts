@@ -4,5 +4,5 @@ export default interface Instructor {
   email: string;
   phone: string | null;
   password: string;
-  bio: string | null;
+  bio?: string;
 }

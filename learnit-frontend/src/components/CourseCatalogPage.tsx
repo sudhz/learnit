@@ -18,7 +18,6 @@ const CourseCatalogPage = () => {
   useEffect(() => {
     const fetchCourses = async () => {
       const response = await GetCourses();
-      console.log(response);
       setCourses(response);
     };
     fetchCourses();
@@ -36,7 +35,6 @@ const CourseCatalogPage = () => {
               <Card
                 sx={{
                   maxWidth: 345,
-                  minHeight: 400,
                   maxHeight: 450,
                   overflow: "auto",
                 }}
@@ -52,7 +50,13 @@ const CourseCatalogPage = () => {
                   <Typography variant="body1" margin={1}>
                     {`$${course.price}`}
                   </Typography>
-
+                  <Typography variant="body2" margin={1}>
+                    {course.cDesc
+                      ? course.cDesc.length > 35
+                        ? `${course.cDesc?.slice(0, 35)}...`
+                        : course.cDesc
+                      : "No Description"}
+                  </Typography>
                   <Button variant="contained">Add to cart</Button>
                 </CardContent>
               </Card>
