@@ -17,18 +17,19 @@ VALUES
     ('Bob Brown', 'bob.brown@example.com', '5544332211', 'password012'),
     ('Charlie Davis', 'charlie.davis@example.com', '9988776655', 'password345');
 
--- Inserting additional dummy data into the courses table with common instructor IDs
-INSERT INTO courses
-    (name, i_id, c_desc)
+USE [Learnit]
+GO
+INSERT INTO [dbo].[courses]
+    ([id], [name], [i_id], [c_desc], [img_url], [price])
 VALUES
-    ('Chemistry', 1, 'Basic Principles of Chemistry'),
-    ('Computer Science', 2, 'Introduction to Algorithms and Data Structures'),
-    ('Art', 3, 'Renaissance Art History'),
-    ('Music', 4, 'Music Theory and Composition'),
-    ('Physical Education', 5, 'Introduction to Fitness and Wellness'),
-    ('Geography', 1, 'World Geography'),
-    ('Economics', 2, 'Microeconomics and Macroeconomics'),
-    ('Psychology', 3, 'Introduction to Psychology'),
-    ('Sociology', 4, 'Principles of Sociology'),
-    ('Political Science', 5, 'American Government and Politics');
-
+    (1, 'Chemistry', 1, 'Basic Principles of Chemistry', 'https://itpa.in/wp-content/uploads/2021/05/Online-courses.jpg', 19.99),
+    (2, 'Computer Science', 2, 'Introduction to Algorithms and Data Structures', 'https://itpa.in/wp-content/uploads/2021/05/Online-courses.jpg', 19.99),
+    (3, 'Art', 3, 'Renaissance Art History', 'https://itpa.in/wp-content/uploads/2021/05/Online-courses.jpg', 19.99),
+    (4, 'Music', 4, 'Music Theory and Composition', 'https://itpa.in/wp-content/uploads/2021/05/Online-courses.jpg', 19.99),
+    (5, 'Physical Education', 5, 'Introduction to Fitness and Wellness', 'https://itpa.in/wp-content/uploads/2021/05/Online-courses.jpg', 19.99),
+    (6, 'Geography', 1, 'World Geography', 'https://itpa.in/wp-content/uploads/2021/05/Online-courses.jpg', 19.99),
+    (7, 'Economics', 2, 'Microeconomics and Macroeconomics', 'https://itpa.in/wp-content/uploads/2021/05/Online-courses.jpg', 19.99),
+    (8, 'Psychology', 3, 'Introduction to Psychology', 'https://itpa.in/wp-content/uploads/2021/05/Online-courses.jpg', 19.99),
+    (9, 'Sociology', 4, 'Principles of Sociology', 'https://itpa.in/wp-content/uploads/2021/05/Online-courses.jpg', 19.99),
+    (10, 'Political Science', 5, 'American Government and Politics', 'https://itpa.in/wp-content/uploads/2021/05/Online-courses.jpg', 19.99)
+GO
