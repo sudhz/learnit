@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Card, CardContent, Typography, Avatar, Button } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 import Student from "../../model/student";
 import { GetStudent } from "../../services/api/studentService";
+import { AuthContext } from "../../services/context/auth/authContext";
 
 const StudentProfile: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const [student, setStudent] = useState<Partial<Student>>({});
+  const { auth } = useContext(AuthContext);
   useEffect(() => {
     try {
       const fetchStudent = async () => {
@@ -28,7 +30,7 @@ const StudentProfile: React.FC = () => {
     navigate("/");
   };
   const handleEditButton = () => {
-    navigate("/UpdateProfile");
+    navigate(`/student/${id}/updateprofile`);
   };
 
   return (
