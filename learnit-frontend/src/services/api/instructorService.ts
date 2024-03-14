@@ -40,7 +40,7 @@ export const GetInstructors = async (): Promise<Instructor[]> => {
     }
   }
 };
- 
+
 export const GetInstructor = async (id: number): Promise<Instructor> => {
   try {
     const response: AxiosResponse<Instructor> = await axios.get(
@@ -55,7 +55,7 @@ export const GetInstructor = async (id: number): Promise<Instructor> => {
     }
   }
 };
- 
+
 export const UpdateInstructor = async (newDetails: Instructor) => {
   try {
     const data = JSON.stringify({
@@ -84,7 +84,7 @@ export const UpdateInstructor = async (newDetails: Instructor) => {
     }
   }
 };
- 
+
 export const AuthInstructor = async (email: string, password: string) => {
   try {
     const data = JSON.stringify({

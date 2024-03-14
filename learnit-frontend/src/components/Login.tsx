@@ -13,11 +13,10 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { AuthInstructor } from "../services/api/instructorService";
 import { AuthStudent } from "../services/api/studentService";
-import { useAuthContext } from "../services/context/authContext";
-import { AxiosError } from "axios";
+import { AuthContext } from "../services/context/auth/authContext";
 
 const schema = z.object({
   email: z.string().email(),
@@ -29,7 +28,7 @@ type FormFields = z.infer<typeof schema>;
 const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { auth, setAuth } = useAuthContext();
+  const { setAuth } = useContext(AuthContext);
   const {
     register,
     handleSubmit,
@@ -44,13 +43,18 @@ const Login = () => {
       const id = location.pathname.includes("/instructor")
         ? await AuthInstructor(data.email, data.password)
         : await AuthStudent(data.email, data.password);
-      console.log(id);
+      setAuth({
+        id: id.id,
+        isLoggedIn: true,
+        user: location.pathname.includes("/instructor")
+          ? "instructor"
+          : "student",
+      });
       navigate(
         location.pathname.includes("/instructor")
           ? "/instructor/home"
           : "/student/home"
       );
-      setAuth({ id: id, isLoggedIn: true });
       alert("Logged in successfully!");
     } catch (error) {
       if (error instanceof Error) {

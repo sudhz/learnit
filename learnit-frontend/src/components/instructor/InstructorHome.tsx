@@ -1,28 +1,29 @@
+
 import React from 'react';
-import { Box, Typography, Button, Container } from '@mui/material';
- 
+import { Box, Typography, Button, Container } from "@mui/material";
+
 const InstructorHome = () => {
   const backgroundStyle = {
     backgroundImage: `url("https://cdn.elearningindustry.com/wp-content/uploads/2022/01/shutterstock_525008128.jpg")`, // Replace with your actual image URL
-    backgroundSize: 'cover',
-    backgroundRepeat: 'no-repeat',
-    backgroundPosition: 'center',
-    minHeight: '100vh', // Adjust the height as needed
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundSize: "cover",
+    backgroundRepeat: "no-repeat",
+    backgroundPosition: "center",
+    minHeight: "100vh", // Adjust the height as needed
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
   };
- 
+
   const contentStyle = {
-    margin: '20px',
-    padding: '20px',
-    border: '1px solid grey',
-    borderRadius: '2px',
-    backgroundColor: 'rgba(255, 255, 255, 0.8)',
-    textAlign: 'center',
+    margin: "20px",
+    padding: "20px",
+    border: "1px solid grey",
+    borderRadius: "2px",
+    backgroundColor: "rgba(255, 255, 255, 0.8)",
+    textAlign: "center",
   };
- 
+
   return (
     <Box sx={backgroundStyle}>
       <Container maxWidth="sm">
