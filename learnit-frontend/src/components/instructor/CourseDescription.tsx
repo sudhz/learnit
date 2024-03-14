@@ -129,9 +129,11 @@ const CourseDescription: React.FC = () => {
             Save
           </Button>
           {/* <UploadItem/> */}
+          {/* <UploadItem/> */}
         </Grid>
       </Box>
     </Box>
+    </div>
   );
 };
  

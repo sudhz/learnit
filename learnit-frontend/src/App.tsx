@@ -173,6 +173,7 @@ const App: React.FC = () => {
         <AppBar
           color="primary"
           position="fixed"
+          position="fixed"
           sx={{ top: "auto", bottom: 0, padding: 3 }}
         >
           <Toolbar>
@@ -194,6 +195,7 @@ const App: React.FC = () => {
       </footer>
     </>
   );
+};
 };
 
 export default App;
