@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
-using Learnit_Backend.Models; // Adjust the namespace according to your project structure
+using Learnit_Backend.Models;
+using Learnit_Backend.Controllers; // Adjust the namespace according to your project structure
 
 namespace Learnit_Backend.Data // Adjust the namespace according to your project structure
 {
@@ -13,6 +14,7 @@ namespace Learnit_Backend.Data // Adjust the namespace according to your project
         public DbSet<Student> Students { get; set; }
         public DbSet<Instructor> Instructors { get; set; }
         public DbSet<Course> Courses { get; set; }
+        public DbSet<Comment> Comment { get; set; }
           protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // Configuring a one-to-many relationship between Instructor and Course
