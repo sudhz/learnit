@@ -118,7 +118,7 @@ const App: React.FC = () => {
                     size="large"
                     color="inherit"
                     component={Link}
-                    to="/my-courses"
+                    to="/instructor/home/courses"
                   >
                     <BookmarkIcon /> {/* Using MyCourses icon */}
                   </IconButton>
@@ -175,7 +175,7 @@ const App: React.FC = () => {
       <footer>
         <AppBar
           color="primary"
-          position="fixed"
+          position="static"
           sx={{ top: "auto", bottom: 0, padding: 3 }}
         >
           <Toolbar>

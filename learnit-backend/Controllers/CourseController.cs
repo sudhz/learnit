@@ -66,6 +66,22 @@ namespace Learnit_Backend.Controllers
             return course;
         }
 
+        // get all the courses from i_id
+        [HttpGet("instructor/{id}")]
+        public async Task<ActionResult<IEnumerable<Course>>> GetCoursesByInstructorId(int id)
+        {
+            var courses = await _context.Courses
+                .Where(c => c.I_id == id)
+                .ToListAsync();
+ 
+            if (courses == null || courses.Count == 0)
+            {
+                return NotFound();
+            }
+ 
+            return courses;
+        }
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCourse(int id)
         {

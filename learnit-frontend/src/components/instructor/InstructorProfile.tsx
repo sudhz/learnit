@@ -36,7 +36,7 @@ const InstructorProfile: React.FC = () => {
     navigate("/");
   };
   const handleEditButton = () => {
-    navigate("/updateProfile");
+    navigate(`/instructor/home/myprofile/updateprofile/${id}`);
   };
 
   return (

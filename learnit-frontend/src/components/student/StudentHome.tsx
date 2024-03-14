@@ -1,6 +1,8 @@
 import { Box, Typography, Button, Container } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const StudentHome = () => {
+  const navigate = useNavigate();
   const backgroundStyle = {
     backgroundImage: `url("https://cdn.elearningindustry.com/wp-content/uploads/2022/01/shutterstock_525008128.jpg")`, // Replace with your actual image URL
     backgroundSize: "cover",
@@ -32,7 +34,12 @@ const StudentHome = () => {
           <Typography variant="body1" gutterBottom>
             Here you can find all the resources that need to update yourself
           </Typography>
-          <Button variant="contained" color="primary" size="large">
+          <Button
+            variant="contained"
+            color="primary"
+            size="large"
+            onClick={() => navigate("/student/home/courses")}
+          >
             Start Learning
           </Button>
         </Box>

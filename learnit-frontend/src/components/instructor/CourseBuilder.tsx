@@ -61,8 +61,8 @@ type FormFields = z.infer<typeof schema>;
 const CourseBuilder: React.FC = () => {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState("");
   const [selectedRadio, setSelectedRadio] = useState("");
+  const [courseId, setCourseId] = useState<number | null>(null);
 
   const { auth } = useContext(AuthContext);
   console.log(auth);
@@ -80,42 +80,39 @@ const CourseBuilder: React.FC = () => {
   };
 
   const onSubmitCreateCourse: SubmitHandler<FormFields> = async (data) => {
-    const newCourse = JSON.stringify({
-      name: data.title,
-      i_id: auth.id,
-      // s_id: auth.id,
-      instructors: null,
-      price: data.price,
-      cDesc: data.content,
-      imgUrl: data.imgUrl,
-    });
-    const config = {
-      method: "post",
-      maxBodyLength: Infinity,
-      url: "http://localhost:5292/api/Course",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      data: newCourse,
-    };
-    // const response = await axios.request(config);
-    // console.log(response);
-    axios
-      .request(config)
-      .then((response) => {
-        console.log(JSON.stringify(response.data));
-        alert("Course created successfully!");
-      })
-      .catch((error) => {
-        console.log(error);
-        alert("Error creating course. Please try again.");
+    try {
+      const newCourse = JSON.stringify({
+        name: data.title,
+        i_id: auth.id,
+        instructors: null,
+        price: data.price,
+        cDesc: data.content,
+        imgUrl: data.imgUrl,
       });
+
+      const config = {
+        method: "post",
+        maxBodyLength: Infinity,
+        url: "http://localhost:5292/api/Course",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        data: newCourse,
+      };
+      const response = await axios.request(config);
+      setCourseId(response.data.id);
+      alert("Course created successfully!");
+    } catch (error) {
+      console.log(error);
+      alert("Error creating course. Please try again.");
+    }
   };
+
   const handleConfirm = () => {
     switch (selectedRadio) {
       case "option1":
         {
-          navigate("/instructor/home/coursebuilder/video");
+          navigate(`/instructor/home/coursebuilder/${courseId}/video`);
         }
         break;
       case "option2":

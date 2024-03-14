@@ -1,8 +1,9 @@
-
-import React from 'react';
-import { Box, Typography, Button, Container } from "@mui/material";
+import React from "react";
+import { Box, Typography, Button, Container, Link } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const InstructorHome = () => {
+  const navigate = useNavigate();
   const backgroundStyle = {
     backgroundImage: `url("https://cdn.elearningindustry.com/wp-content/uploads/2022/01/shutterstock_525008128.jpg")`, // Replace with your actual image URL
     backgroundSize: "cover",
@@ -34,7 +35,12 @@ const InstructorHome = () => {
           <Typography variant="body1" gutterBottom>
             Here you can manage all your courses
           </Typography>
-          <Button variant="contained" color="primary" size="large">
+          <Button
+            variant="contained"
+            color="primary"
+            size="large"
+            onClick={() => navigate("/instructor/home/coursebuilder")}
+          >
             Start Teaching
           </Button>
         </Box>
@@ -42,5 +48,5 @@ const InstructorHome = () => {
     </Box>
   );
 };
- 
+
 export default InstructorHome;

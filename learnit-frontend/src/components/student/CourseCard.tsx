@@ -30,7 +30,7 @@ const CourseCard = ({ id }: { id: number }) => {
   if (!course) {
     return <>Loading...</>;
   }
-
+// Link to=/student/course/{id}
   return (
     <Grid item xs={12} sm={6} md={4} lg={3} key={course.id}>
       <Card

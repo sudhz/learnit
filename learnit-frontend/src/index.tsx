@@ -28,6 +28,9 @@ import Video from "./components/instructor/Video";
 import InstructorProfile from "./components/instructor/InstructorProfile";
 import UpdateInstructorProfile from "./components/instructor/UpdateInstructorProfile";
 import StudentCourses from "./components/student/StudentCourses";
+import InstructorCourses from "./components/instructor/InstructorCourses";
+import VideoPlayer from "./components/student/VideoPlayer";
+import UpdateStudentProfile from "./components/student/UpdateStudentProfile";
 
 const router = createBrowserRouter([
   {
@@ -87,7 +90,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "instructor/home/coursebuilder/video",
+        path: "/instructor/home/coursebuilder/:id/video",
         element: <Video />,
       },
 
@@ -96,11 +99,11 @@ const router = createBrowserRouter([
         element: <CourseDetailPage />,
       },
       {
-        path: "coursediscussion/:id",
+        path: "course/discussion/:id",
         element: <CourseDiscussion />,
       },
       {
-        path: "coursedescription/:id",
+        path: "course/description/:id",
         element: <CourseDescription />,
       },
       {
@@ -122,6 +125,18 @@ const router = createBrowserRouter([
       {
         path: "/student/home/courses",
         element: <StudentCourses />,
+      },
+      {
+        path: "/instructor/home/courses",
+        element: <InstructorCourses />,
+      },
+      {
+        path: "/video",
+        element: <VideoPlayer />,
+      },
+      {
+        path: "/student/:id/updateprofile",
+        element: <UpdateStudentProfile />,
       },
     ],
   },

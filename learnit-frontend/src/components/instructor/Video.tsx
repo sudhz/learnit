@@ -6,16 +6,19 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
+  Box,
 } from "@mui/material";
 import axios from "axios";
 import { AuthContext } from "../../services/context/auth/authContext";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 
 const VideoUploadForm: React.FC = () => {
   const [videoName, setVideoName] = useState("");
   const [videoLink, setVideoLink] = useState("");
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [open, setOpen] = useState(false);
-  const { auth } = useContext(AuthContext);
+  const { id } = useParams();
+  const navigate = useNavigate();
   useEffect(() => {
     handleOpenDialog();
   }, []);
@@ -48,32 +51,36 @@ const VideoUploadForm: React.FC = () => {
     }
   };
 
-  const handleVideoUpload = () => {
+  const handleVideoUpload = async () => {
     const data = {
-      C_Id: 20,
+      C_Id: Number(id),
       VideoLink: videoLink,
       VideoName: videoName,
     };
 
-    axios
-      .post("http://localhost:5292/api/AddVideo", data, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-      .then((response) => {
-        console.log(response.data);
-        setOpen(false);
-        window.alert("Video added successfully");
-      })
-      .catch((error) => {
-        console.error(error);
-        window.alert("Error adding video");
-      });
+    try {
+      const response = await axios.post(
+        "http://localhost:5292/api/AddVideo",
+        data,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log(response.data);
+      setOpen(false);
+      navigate("/instructor/home");
+      window.alert("Video added successfully");
+    } catch (error) {
+      console.error(error);
+      window.alert("Error adding video");
+    }
   };
 
   return (
     <>
+      <Box height="75vh" />
       <Dialog open={open} onClose={handleCloseDialog}>
         <DialogTitle>Add Video</DialogTitle>
         <DialogContent>
