@@ -66,8 +66,8 @@ const InstructorProfile: React.FC = () => {
         <br>
         </br>
         Data Structures
-        <br>
-        </br>
+        <br></br>
+      
         Algorithms
           {/* {instructor.courses.map((course, index) => (
             <Typography key={index} variant="body2" color="text.secondary">
