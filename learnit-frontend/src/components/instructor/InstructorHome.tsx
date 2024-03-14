@@ -1,3 +1,5 @@
+
+import React from 'react';
 import { Box, Typography, Button, Container } from "@mui/material";
 
 const InstructorHome = () => {
@@ -40,5 +42,5 @@ const InstructorHome = () => {
     </Box>
   );
 };
-
+ 
 export default InstructorHome;

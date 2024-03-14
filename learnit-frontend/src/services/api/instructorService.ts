@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 import Instructor from "../../model/instructor";
-
+ 
 export const AddInstructor = async (
   instructor: Instructor
 ): Promise<Instructor> => {
@@ -25,7 +25,7 @@ export const AddInstructor = async (
     }
   }
 };
-
+ 
 export const GetInstructors = async (): Promise<Instructor[]> => {
   try {
     const response: AxiosResponse<Instructor[]> = await axios.get(
