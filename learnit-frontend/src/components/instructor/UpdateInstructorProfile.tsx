@@ -1,68 +1,120 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from "react";
 import {
- Alert,
- Box,
- Button,
- IconButton,
- InputAdornment,
- Stack,
- TextField,
- Typography,
-} from '@mui/material';
-import { SubmitHandler, useForm } from 'react-hook-form';
-import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { Visibility, VisibilityOff } from '@mui/icons-material';
-import { useNavigate } from 'react-router-dom';
- 
-// Define the schema for validation
-const schema = z.object({
- name: z.string(),
- email: z.string().email(),
- phone: z.string().optional().refine(
-    (value) => !value || /^\d{10}$/.test(value),
-    { message: 'Phone number must be 10 digits' }
- ),
- currentPassword: z.string().min(8, { message: 'Password must be at least 8 characters' }),
- newPassword: z.string().min(8, { message: 'Password must be at least 8 characters' }),
- confirmNewPassword: z.string().min(8, { message: 'Password must be at least 8 characters' }),
-}).refine((data) => data.newPassword === data.confirmNewPassword, {
- path: ['confirmNewPassword'],
- message: 'Passwords do not match',
-});
- 
+  Alert,
+  Box,
+  Button,
+  IconButton,
+  InputAdornment,
+  Stack,
+  TextField,
+  Typography,
+} from "@mui/material";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { useNavigate, useParams } from "react-router-dom";
+import Instructor from "../../model/instructor";
+import {
+  GetInstructor,
+  UpdateInstructor,
+} from "../../services/api/instructorService";
+
+const schema = z
+  .object({
+    name: z.string(),
+    email: z.string().email(),
+    phone: z
+      .string()
+      .optional()
+      .refine((value) => !value || /^\d{10}$/.test(value), {
+        message: "Phone number must be 10 digits",
+      }),
+    currentPassword: z
+      .string()
+      .min(8, { message: "Password must be at least 8 characters" }),
+    newPassword: z
+      .string()
+      .min(8, { message: "Password must be at least 8 characters" }),
+    confirmNewPassword: z
+      .string()
+      .min(8, { message: "Password must be at least 8 characters" }),
+  })
+  .refine((data) => data.newPassword === data.confirmNewPassword, {
+    path: ["confirmNewPassword"],
+    message: "Passwords do not match",
+  });
+
 type FormFields = z.infer<typeof schema>;
- 
-const UpdateProfile = () => {
- const navigate = useNavigate();
- const {
+
+const UpdateInstructorProfile: React.FC = () => {
+  const { id } = useParams<{ id: string }>();
+  const [instructor, setInstructor] = useState<Partial<Instructor>>({});
+
+  useEffect(() => {
+    try {
+      const fetchInstructor = async () => {
+        if (!id) {
+          throw new Error("id not present in the route parameter");
+        }
+        const instructor = await GetInstructor(+id);
+        setInstructor(instructor);
+      };
+      fetchInstructor();
+    } catch (error) {
+      alert(`${error}`);
+    }
+  }, [id]);
+  const navigate = useNavigate();
+  const {
     register,
     handleSubmit,
     setError,
     formState: { errors, isSubmitting },
- } = useForm<FormFields>({
+    reset,
+  } = useForm<FormFields>({
     resolver: zodResolver(schema),
- });
- 
- const onSubmit: SubmitHandler<FormFields> = async (data: FormFields) => {
+  });
+  useEffect(() => {
+    reset({
+      phone: instructor.phone || "",
+    });
+  }, [instructor, reset]);
+
+  const onSubmit: SubmitHandler<FormFields> = async (data: FormFields) => {
     try {
-      // Simulate backend call
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      console.log(data);
-      // Here you would typically call your backend to update the profile
-      // If the backend returns an error, you can use setError to display it
+      if (!id) {
+        throw new Error("id route parameter missing");
+      }
+      const updatedDetails: Instructor = {
+        id: +id,
+        name: data.name,
+        email: data.email,
+        phone: data.phone || null,
+        password: data.confirmNewPassword,
+      };
+      const response = await UpdateInstructor(updatedDetails);
+      console.log(response);
+      if (response.status === 204) {
+        alert("Updated profile details successfully!");
+        navigate("/instructor/home");
+      } else {
+        throw new Error(response.statusText);
+      }
     } catch (error) {
       setError("root", {
-        message: "The error from the backend",
+        message: `${error}`,
       });
     }
- };
- 
- const [showPassword, setShowPassword] = useState(false);
- 
- return (
+  };
+
+  const [showPassword, setShowPassword] = useState(false);
+
+  return (
     <Stack margin={5} alignItems="center">
-      <Typography variant="h5" sx={{ color: 'primary.main',fontWeight: 600 }}>Update Profile Details</Typography>
+      <Typography variant="h5" sx={{ color: "primary.main", fontWeight: 600 }}>
+        Update Profile Details
+      </Typography>
       <Box margin={3}>
         <form noValidate onSubmit={handleSubmit(onSubmit)}>
           <Stack spacing={2} width={400}>
@@ -70,6 +122,8 @@ const UpdateProfile = () => {
               {...register("name")}
               label="Name"
               type="text"
+              value={instructor.name || ""}
+              // disabled
               error={!!errors.name}
               helperText={errors.name?.message}
             />
@@ -77,6 +131,7 @@ const UpdateProfile = () => {
               {...register("email")}
               label="Email"
               type="email"
+              value={instructor.email || ""}
               error={!!errors.email}
               helperText={errors.email?.message}
             />
@@ -86,17 +141,25 @@ const UpdateProfile = () => {
               type="number"
               error={!!errors.phone}
               helperText={errors.phone?.message}
+              focused
             />
-            <Typography variant="h5" align="center" sx={{ color: 'primary.main', fontWeight: 600 }}>Change Password</Typography>
+            <Typography
+              variant="h5"
+              align="center"
+              sx={{ color: "primary.main", fontWeight: 600 }}
+            >
+              Change Password
+            </Typography>
             <TextField
               {...register("currentPassword")}
               label="Current Password"
               type={showPassword ? "text" : "password"}
+              value={instructor.password || ""}
               error={!!errors.currentPassword}
               helperText={errors.currentPassword?.message}
               InputProps={{
                 endAdornment: (
-                 <InputAdornment position="end">
+                  <InputAdornment position="end">
                     <IconButton
                       size="small"
                       aria-label="toggle password visibility"
@@ -109,7 +172,7 @@ const UpdateProfile = () => {
                         <Visibility fontSize="small" />
                       )}
                     </IconButton>
-                 </InputAdornment>
+                  </InputAdornment>
                 ),
               }}
             />
@@ -121,7 +184,7 @@ const UpdateProfile = () => {
               helperText={errors.newPassword?.message}
               InputProps={{
                 endAdornment: (
-                 <InputAdornment position="end">
+                  <InputAdornment position="end">
                     <IconButton
                       size="small"
                       aria-label="toggle password visibility"
@@ -134,7 +197,7 @@ const UpdateProfile = () => {
                         <Visibility fontSize="small" />
                       )}
                     </IconButton>
-                 </InputAdornment>
+                  </InputAdornment>
                 ),
               }}
             />
@@ -168,7 +231,7 @@ const UpdateProfile = () => {
         </form>
       </Box>
     </Stack>
- );
+  );
 };
- 
-export default UpdateProfile;
+
+export default UpdateInstructorProfile;

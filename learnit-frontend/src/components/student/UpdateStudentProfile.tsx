@@ -14,11 +14,8 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useNavigate, useParams } from "react-router-dom";
-import Instructor from "../../model/instructor";
-import {
-  GetInstructor,
-  UpdateInstructor,
-} from "../../services/api/instructorService";
+import Student from "../../model/student";
+import { GetStudent, UpdateStudent } from "../../services/api/studentService";
 
 const schema = z
   .object({
@@ -30,6 +27,7 @@ const schema = z
       .refine((value) => !value || /^\d{10}$/.test(value), {
         message: "Phone number must be 10 digits",
       }),
+    college: z.string(),
     currentPassword: z
       .string()
       .min(8, { message: "Password must be at least 8 characters" }),
@@ -47,20 +45,20 @@ const schema = z
 
 type FormFields = z.infer<typeof schema>;
 
-const UpdateProfile: React.FC = () => {
+const UpdateStudentProfile: React.FC = () => {
   const { id } = useParams<{ id: string }>();
-  const [instructor, setInstructor] = useState<Partial<Instructor>>({});
+  const [student, setStudent] = useState<Partial<Student>>({});
 
   useEffect(() => {
     try {
-      const fetchInstructor = async () => {
+      const fetchStudent = async () => {
         if (!id) {
           throw new Error("id not present in the route parameter");
         }
-        const instructor = await GetInstructor(+id);
-        setInstructor(instructor);
+        const student = await GetStudent(+id);
+        setStudent(student);
       };
-      fetchInstructor();
+      fetchStudent();
     } catch (error) {
       alert(`${error}`);
     }
@@ -77,27 +75,29 @@ const UpdateProfile: React.FC = () => {
   });
   useEffect(() => {
     reset({
-      phone: instructor.phone || "",
+      college: student.college || "",
+      phone: student.phone || "",
     });
-  }, [instructor, reset]);
+  }, [student, reset]);
 
   const onSubmit: SubmitHandler<FormFields> = async (data: FormFields) => {
     try {
       if (!id) {
         throw new Error("id route parameter missing");
       }
-      const updatedDetails: Instructor = {
+      const updatedDetails: Student = {
         id: +id,
         name: data.name,
         email: data.email,
         phone: data.phone || null,
         password: data.confirmNewPassword,
+        college: data.college || null,
       };
-      const response = await UpdateInstructor(updatedDetails);
+      const response = await UpdateStudent(updatedDetails);
       console.log(response);
       if (response.status === 204) {
         alert("Updated profile details successfully!");
-        navigate("/instructor/home");
+        navigate("/student/home");
       } else {
         throw new Error(response.statusText);
       }
@@ -122,7 +122,7 @@ const UpdateProfile: React.FC = () => {
               {...register("name")}
               label="Name"
               type="text"
-              value={instructor.name || ""}
+              value={student.name || ""}
               // disabled
               error={!!errors.name}
               helperText={errors.name?.message}
@@ -131,7 +131,7 @@ const UpdateProfile: React.FC = () => {
               {...register("email")}
               label="Email"
               type="email"
-              value={instructor.email || ""}
+              value={student.email || ""}
               error={!!errors.email}
               helperText={errors.email?.message}
             />
@@ -141,6 +141,14 @@ const UpdateProfile: React.FC = () => {
               type="number"
               error={!!errors.phone}
               helperText={errors.phone?.message}
+              focused
+            />
+            <TextField
+              {...register("college", { required: false })}
+              label="College (optional)"
+              type="string"
+              error={!!errors.college}
+              helperText={errors.college?.message}
               focused
             />
             <Typography
@@ -154,7 +162,7 @@ const UpdateProfile: React.FC = () => {
               {...register("currentPassword")}
               label="Current Password"
               type={showPassword ? "text" : "password"}
-              value={instructor.password || ""}
+              value={student.password || ""}
               error={!!errors.currentPassword}
               helperText={errors.currentPassword?.message}
               InputProps={{
@@ -234,4 +242,4 @@ const UpdateProfile: React.FC = () => {
   );
 };
 
-export default UpdateProfile;
+export default UpdateStudentProfile;

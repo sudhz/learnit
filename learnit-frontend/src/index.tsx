@@ -20,10 +20,8 @@ import CourseDescription from "./components/instructor/CourseDescription";
 import CourseBuilder from "./components/instructor/CourseBuilder";
 import StudentHome from "./components/student/StudentHome";
 import InstructorHome from "./components/instructor/InstructorHome";
-import UpdateProfile from "./components/instructor/UpdateProfile";
 import AuthContextProvider from "./services/context/auth/AuthContextProvider";
 import ProtectedRoute from "./components/ProtectedRoute";
-import CourseDiscussion from "./components/CourseDiscussion";
 
 const router = createBrowserRouter([
   {
@@ -88,11 +86,7 @@ const router = createBrowserRouter([
       },
       {
         path: "coursebuilder",
-        element: (
-          <ProtectedRoute>
-            <CourseBuilder />
-          </ProtectedRoute>
-        ),
+        element: <CourseBuilder />,
       },
       {
         path: "course/:id",
@@ -105,18 +99,6 @@ const router = createBrowserRouter([
       {
         path: "coursedescription/:id",
         element: <CourseDescription />,
-      },
-      {
-        path: "coursediscussion",
-        element: <CourseDiscussion />,
-      },
-      {
-        path: "updateinstructor/:id",
-        element: (
-          <ProtectedRoute>
-            <UpdateProfile />
-          </ProtectedRoute>
-        ),
       },
     ],
   },

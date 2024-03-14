@@ -54,6 +54,36 @@ export const GetStudent = async (id: number): Promise<Student> => {
   }
 };
 
+export const UpdateStudent = async (newDetails: Student) => {
+  try {
+    const data = JSON.stringify({
+      id: newDetails.id,
+      name: newDetails.name,
+      email: newDetails.email,
+      phone: newDetails.phone,
+      password: newDetails.password,
+      college: newDetails.college,
+    });
+    const config = {
+      method: "put",
+      maxBodyLength: Infinity,
+      url: `http://localhost:5292/api/student/${newDetails.id}`,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: data,
+    };
+    const response = await axios.request(config);
+    return response;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(error.message);
+    } else {
+      throw new Error("Unknown error");
+    }
+  }
+};
+
 export const AuthStudent = async (email: string, password: string) => {
   try {
     const data = JSON.stringify({

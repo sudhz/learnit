@@ -44,7 +44,7 @@ const Login = () => {
         ? await AuthInstructor(data.email, data.password)
         : await AuthStudent(data.email, data.password);
       setAuth({
-        id: id,
+        id: id.id,
         isLoggedIn: true,
         user: location.pathname.includes("/instructor")
           ? "instructor"
