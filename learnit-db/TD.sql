@@ -16,15 +16,26 @@ CREATE TABLE instructors
     phone NVARCHAR(10),
     password NVARCHAR(255) NOT NULL
 );
-CREATE TABLE courses
+
+CREATE TABLE [dbo].[courses]
 (
-    id INT IDENTITY(1,1) PRIMARY KEY,
-    name NVARCHAR(255) NOT NULL,
-    i_id INT,
-    c_desc NVARCHAR(255),
-    --course description
-    FOREIGN KEY (i_id) REFERENCES instructors(id)
-);
+    [id] [int] NOT NULL,
+    [name] [nvarchar](255) NOT NULL,
+    [i_id] [int] NULL,
+    [c_desc] [nvarchar](255) NULL,
+    [img_url] [nvarchar](max) NULL,
+    [price] [decimal](10, 2) NOT NULL,
+    PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+ALTER TABLE [dbo].[courses]  WITH CHECK ADD FOREIGN KEY([i_id])
+REFERENCES [dbo].[instructors] ([id])
+GO
+
+
 CREATE TABLE Course_Student_Mapping
 (
     C_Id INT,
