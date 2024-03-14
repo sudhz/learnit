@@ -27,6 +27,7 @@ import UpdateStudentProfile from "./components/student/UpdateStudentProfile";
 import CourseDiscussion from "./components/CourseDiscussion";
 import Video from "./components/instructor/Video";
 import MyProfile from "./components/instructor/Myprofile";
+import UpdateInstructorProfile from "./components/instructor/UpdateInstructorProfile";
 
 const router = createBrowserRouter([
   {
@@ -110,7 +111,7 @@ const router = createBrowserRouter([
         path: "/instructor/home/myprofile/updateprofile/:id",
         element: (
           <ProtectedRoute>
-            <UpdateProfile />
+            <UpdateInstructorProfile />
           </ProtectedRoute>
         ),
       },

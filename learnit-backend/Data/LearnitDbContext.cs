@@ -15,7 +15,7 @@ namespace Learnit_Backend.Data // Adjust the namespace according to your project
         public DbSet<Course> Courses { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Course_Student_Mapping> course_student_mapping { get; set; }
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+
         // public DbSet<Comment> Comment { get; set; }
         public DbSet<AddVideo> AddVideo { get; set; }
 
