@@ -2,119 +2,49 @@ using Learnit_Backend.Data;
 using Learnit_Backend.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Learnit_Backend.Controllers
 {
-   [Route("api/[controller]")]
-   [ApiController]
-   public class Course_Student_MappingController : ControllerBase
-   {
-       private readonly LearnitDbContext _context;
+    [Route("api/[controller]")]
+    [ApiController]
+    public class Course_Student_MappingController : ControllerBase
+    {
+        private readonly LearnitDbContext _context;
 
-       public Course_Student_MappingController(LearnitDbContext context)
-       {
-           _context = context;
-       }
+        public Course_Student_MappingController(LearnitDbContext context)
+        {
+            _context = context;
+        }
 
-       // GET: api/course_student_mapping/course/{id}
-       [HttpGet("course/{id}")]
-       public async Task<ActionResult<IEnumerable<Student>>> GetStudentsByCourseId(int id)
-       {
-           var courseStudentMappings = await _context.Course_student_mappings
-               .Where(csm => csm.C_Id == id)
-               .Include(csm => csm.Students)
-               .ToListAsync();
+        // GET: api/Course_Student_Mapping/course/{id}
+        [HttpGet("course/{id}")]
+        public IActionResult GetStudentsEnrolledForCourse(int id)
+        {
+            var studentIds = _context.course_student_mapping
+                                    .Where(mapping => mapping.C_Id == id)
+                                    .Select(mapping => mapping.S_Id)
+                                    .ToList();
 
-           if (!courseStudentMappings.Any())
-           {
-               return NotFound();
-           }
+            return Ok(studentIds);
+        }
 
-           var students = courseStudentMappings.Select(csm => csm.Students).ToList();
+        // GET: api/Course_Student_Mapping/student/{id}
+        [HttpGet("student/{id}")]
+        public IActionResult GetCoursesEnrolledByStudent(int id)
+        {
+            var courseIds = _context.course_student_mapping
+                                   .Where(mapping => mapping.S_Id == id)
+                                   .Select(mapping => mapping.C_Id)
+                                   .ToList();
 
-           return Ok(students);
-       }
+            return Ok(courseIds);
+        }
 
-       // GET: api/course_student_mapping/student/{id}
-       [HttpGet("student/{id}")]
-       public async Task<ActionResult<IEnumerable<Course>>> GetCoursesByStudentId(int id)
-       {
-           var courseStudentMappings = await _context.Course_student_mappings
-               .Where(csm => csm.S_Id == id)
-               .Include(csm => csm.Courses)
-               .ToListAsync();
-
-           if (!courseStudentMappings.Any())
-           {
-               return NotFound();
-           }
-
-           var courses = courseStudentMappings.Select(csm => csm.Courses).ToList();
-
-           return Ok(courses);
-       }
-
-       // GET: api/course_student_mapping/{courseId}/{studentId}
-       [HttpGet("{courseId}/{studentId}")]
-       public async Task<ActionResult<Course_Student_Mapping>> GetCourseStudentMapping(int courseId, int studentId)
-       {
-           var courseStudentMapping = await _context.Course_student_mappings
-               .FirstOrDefaultAsync(csm => csm.C_Id == courseId && csm.S_Id == studentId);
-
-           if (courseStudentMapping == null)
-           {
-               return NotFound();
-           }
-
-           return courseStudentMapping;
-       }
-
-       // POST: api/course_student_mapping
-       [HttpPost]
-       public async Task<ActionResult<Course_Student_Mapping>> CreateCourseStudentMapping(Course_Student_Mapping courseStudentMapping)
-       {
-           _context.Course_student_mappings.Add(courseStudentMapping);
-           await _context.SaveChangesAsync();
-
-           return CreatedAtAction(nameof(GetCourseStudentMapping), new { courseId = courseStudentMapping.C_Id, studentId = courseStudentMapping.S_Id }, courseStudentMapping);
-       }
-
-       // PUT: api/course_student_mapping/{courseId}/{studentId}
-       [HttpPut("{courseId}/{studentId}")]
-       public async Task<IActionResult> UpdateCourseStudentMapping(int courseId, int studentId, Course_Student_Mapping courseStudentMapping)
-       {
-           if (courseId != courseStudentMapping.C_Id || studentId != courseStudentMapping.S_Id)
-           {
-               return BadRequest();
-           }
-
-           _context.Entry(courseStudentMapping).State = EntityState.Modified;
-           await _context.SaveChangesAsync();
-
-           return NoContent();
-       }
-
-       // DELETE: api/course_student_mapping/{courseId}/{studentId}
-       [HttpDelete("{courseId}/{studentId}")]
-       public async Task<IActionResult> DeleteCourseStudentMapping(int courseId, int studentId)
-       {
-           var courseStudentMapping = await _context.Course_student_mappings
-               .FirstOrDefaultAsync(csm => csm.C_Id == courseId && csm.S_Id == studentId);
-
-           if (courseStudentMapping == null)
-           {
-               return NotFound();
-           }
-
-           _context.Course_student_mappings.Remove(courseStudentMapping);
-           await _context.SaveChangesAsync();
-
-           return NoContent();
-       }
-
-       private bool CourseStudentMappingExists(int courseId, int studentId)
-       {
-           return _context.Course_student_mappings.Any(e => e.C_Id == courseId && e.S_Id == studentId);
-       }
-   }
+        private bool CourseStudentMappingExists(int courseId, int studentId)
+        {
+            return _context.course_student_mapping.Any(e => e.C_Id == courseId && e.S_Id == studentId);
+        }
+    }
 }
