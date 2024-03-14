@@ -23,6 +23,7 @@ import InstructorHome from "./components/instructor/InstructorHome";
 import UpdateProfile from "./components/instructor/UpdateProfile";
 import AuthContextProvider from "./services/context/auth/AuthContextProvider";
 import ProtectedRoute from "./components/ProtectedRoute";
+import CourseDiscussion from "./components/CourseDiscussion";
 
 const router = createBrowserRouter([
   {
@@ -48,6 +49,10 @@ const router = createBrowserRouter([
       {
         path: "student/login",
         element: <Login />,
+      },
+      {
+        path: "coursediscussion/:id",
+        element: <CourseDiscussion/>,
       },
       {
         path: "student/signup",
