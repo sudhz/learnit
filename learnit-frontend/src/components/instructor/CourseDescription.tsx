@@ -133,7 +133,6 @@ const CourseDescription: React.FC = () => {
         </Grid>
       </Box>
     </Box>
-    </div>
   );
 };
  

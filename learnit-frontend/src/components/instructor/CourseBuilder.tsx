@@ -273,7 +273,6 @@ const CourseBuilder: React.FC = () => {
               type="text"
               multiline
               rows={1}
-              rows={1}
               error={!!errors.content}
               helperText={errors.content?.message}
             />
