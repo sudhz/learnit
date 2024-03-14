@@ -22,6 +22,9 @@ import StudentHome from "./components/student/StudentHome";
 import InstructorHome from "./components/instructor/InstructorHome";
 import AuthContextProvider from "./services/context/auth/AuthContextProvider";
 import ProtectedRoute from "./components/ProtectedRoute";
+import StudentProfile from "./components/student/StudentProfile";
+import UpdateStudentProfile from "./components/student/UpdateStudentProfile";
+import CourseDiscussion from "./components/CourseDiscussion";
 
 const router = createBrowserRouter([
   {
@@ -54,11 +57,7 @@ const router = createBrowserRouter([
       },
       {
         path: "student/home",
-        element: (
-          <ProtectedRoute>
-            <StudentHome />
-          </ProtectedRoute>
-        ),
+        element: <StudentHome />,
       },
       {
         path: "instructor/signup",
@@ -70,19 +69,11 @@ const router = createBrowserRouter([
       },
       {
         path: "instructor/home",
-        element: (
-          <ProtectedRoute>
-            <InstructorHome />
-          </ProtectedRoute>
-        ),
+        element: <InstructorHome />,
       },
       {
         path: "courses",
-        element: (
-          <ProtectedRoute>
-            <CourseCatalogPage />
-          </ProtectedRoute>
-        ),
+        element: <CourseCatalogPage />,
       },
       {
         path: "coursebuilder",
@@ -90,15 +81,23 @@ const router = createBrowserRouter([
       },
       {
         path: "course/:id",
-        element: (
-          <ProtectedRoute>
-            <CourseDetailPage />
-          </ProtectedRoute>
-        ),
+        element: <CourseDetailPage />,
+      },
+      {
+        path: "coursediscussion/:id",
+        element: <CourseDiscussion />,
       },
       {
         path: "coursedescription/:id",
         element: <CourseDescription />,
+      },
+      {
+        path: "student/home/profile/:id",
+        element: <StudentProfile />,
+      },
+      {
+        path: "student/:id/updateprofile",
+        element: <UpdateStudentProfile />,
       },
     ],
   },

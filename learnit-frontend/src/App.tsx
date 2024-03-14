@@ -147,7 +147,7 @@ const App: React.FC = () => {
                   variant="h5"
                   component={Link}
                   sx={{ color: "white", textDecoration: "none" }}
-                  to=""
+                  to="/student/courses"
                 >
                   Subscriptions
                 </Typography>
