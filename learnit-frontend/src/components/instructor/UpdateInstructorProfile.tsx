@@ -47,7 +47,7 @@ const schema = z
 
 type FormFields = z.infer<typeof schema>;
 
-const UpdateProfile: React.FC = () => {
+const UpdateInstructorProfile: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const [instructor, setInstructor] = useState<Partial<Instructor>>({});
 
@@ -234,4 +234,4 @@ const UpdateProfile: React.FC = () => {
   );
 };
 
-export default UpdateProfile;
+export default UpdateInstructorProfile;

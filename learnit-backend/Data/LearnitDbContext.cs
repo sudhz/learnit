@@ -10,10 +10,12 @@ namespace Learnit_Backend.Data // Adjust the namespace according to your project
             : base(options)
         {
         }
-
         public DbSet<Student> Students { get; set; }
         public DbSet<Instructor> Instructors { get; set; }
         public DbSet<Course> Courses { get; set; }
+        public DbSet<Comment> Comments { get; set; }
+        public DbSet<Course_Student_Mapping> course_student_mapping { get; set; }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         // public DbSet<Comment> Comment { get; set; }
         public DbSet<AddVideo> AddVideo { get; set; }
 
@@ -24,6 +26,9 @@ namespace Learnit_Backend.Data // Adjust the namespace according to your project
                 .HasMany(i => i.Courses)
                 .WithOne(c => c.Instructors)
                 .HasForeignKey(c => c.I_id);
+
+            modelBuilder.Entity<Course_Student_Mapping>()
+                .HasKey(mapping => new { mapping.C_Id, mapping.S_Id });
 
              modelBuilder.Entity<Course>()
                 .HasMany(i => i.AddVideos)

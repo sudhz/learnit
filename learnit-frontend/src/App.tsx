@@ -13,14 +13,15 @@ import { Link, Outlet, useLocation } from "react-router-dom";
 import LibraryBooksIcon from "@mui/icons-material/LibraryBooks";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
-import NotificationsIcon from "@mui/icons-material/Notifications";
 import AddIcon from "@mui/icons-material/Add";
+import { useContext } from "react";
+import { AuthContext } from "./services/context/auth/authContext";
 
 const App: React.FC = () => {
   const location = useLocation();
   const renderProfileLink = location.pathname.startsWith("/instructor/home");
   const renderStudentLink = location.pathname.startsWith("/student/home");
-
+  const {auth} = useContext(AuthContext);
   return (
     <>
       <header>
@@ -62,14 +63,14 @@ const App: React.FC = () => {
                     <LibraryBooksIcon />
                   </IconButton>
                 </Tooltip>
-                <Tooltip title="Notifications">
+                <Tooltip title="Profile">
                   <IconButton
                     size="large"
                     color="inherit"
                     component={Link}
-                    to="/student/home/notifications"
+                    to={`/student/home/profile/${auth.id}`}
                   >
-                    <NotificationsIcon />
+                    <AccountCircleIcon />
                   </IconButton>
                 </Tooltip>
               </>
@@ -113,11 +114,7 @@ const App: React.FC = () => {
                     size="large"
                     color="inherit"
                     component={Link}
-                    to={
-                      location.pathname.startsWith("/instructor/home")
-                        ? "/instructor/home/myprofile"
-                        : "/student/home/myprofile"
-                    }
+                    to="/instructor/home"
                   >
                     <AccountCircleIcon />
                   </IconButton>
@@ -137,14 +134,7 @@ const App: React.FC = () => {
               sx={{ bgcolor: "#1976d2" }}
             >
               <Stack spacing={2} mt={5}>
-                <Typography
-                  variant="h5"
-                  component={Link}
-                  sx={{ color: "white", textDecoration: "none" }}
-                  to=""
-                >
-                  Profile
-                </Typography>
+              
                 <Typography
                   variant="h5"
                   component={Link}
@@ -157,7 +147,7 @@ const App: React.FC = () => {
                   variant="h5"
                   component={Link}
                   sx={{ color: "white", textDecoration: "none" }}
-                  to=""
+                  to="/student/courses"
                 >
                   Subscriptions
                 </Typography>
