@@ -25,6 +25,9 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import StudentProfile from "./components/student/StudentProfile";
 import UpdateStudentProfile from "./components/student/UpdateStudentProfile";
 import CourseDiscussion from "./components/CourseDiscussion";
+import Video from "./components/instructor/Video";
+import MyProfile from "./components/instructor/Myprofile";
+import UpdateInstructorProfile from "./components/instructor/UpdateInstructorProfile";
 
 const router = createBrowserRouter([
   {
@@ -76,9 +79,18 @@ const router = createBrowserRouter([
         element: <CourseCatalogPage />,
       },
       {
-        path: "coursebuilder",
-        element: <CourseBuilder />,
+        path: "/instructor/home/coursebuilder",
+        element: (
+          <ProtectedRoute>
+            <CourseBuilder />
+          </ProtectedRoute>
+        ),
       },
+        {
+          path: "instructor/home/coursebuilder/video",
+          element: <Video />,
+        },
+      
       {
         path: "course/:id",
         element: <CourseDetailPage />,
@@ -96,8 +108,20 @@ const router = createBrowserRouter([
         element: <StudentProfile />,
       },
       {
-        path: "student/:id/updateprofile",
-        element: <UpdateStudentProfile />,
+        path: "/instructor/home/myprofile/updateprofile/:id",
+        element: (
+          <ProtectedRoute>
+            <UpdateInstructorProfile />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/instructor/home/myprofile",
+        element: (
+          
+            <MyProfile />
+          
+        ),
       },
     ],
   },

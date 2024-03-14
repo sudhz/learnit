@@ -20,6 +20,10 @@ namespace Learnit_Backend.Models // Adjust the namespace according to your proje
         [Required]
         public int I_id { get; set; }
 
+        // [ForeignKey("s_id")]
+        // [Required]
+        // public int S_id { get; set; }
+
         // Navigation property for Instructor
         public virtual Instructor? Instructors { get; set; }
 
@@ -28,6 +32,7 @@ namespace Learnit_Backend.Models // Adjust the namespace according to your proje
         public string? CDesc { get; set; }
         [Column("img_url")]
         public string? ImgUrl { get; set; }
+        public virtual ICollection<AddVideo>? AddVideos { get; set; }
 
     }
 }

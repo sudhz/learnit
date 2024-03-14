@@ -25,6 +25,7 @@ namespace Learnit_Backend.Models // Adjust the namespace according to your proje
         public required string Password { get; set; }
 
         public virtual ICollection<Course>? Courses { get; set; }
+        // public virtual ICollection<AddVideo>? AddVideos { get; set; }
 
         // Other properties...
     }
