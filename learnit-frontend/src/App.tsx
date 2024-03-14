@@ -147,7 +147,7 @@ const App: React.FC = () => {
                   variant="h5"
                   component={Link}
                   sx={{ color: "white", textDecoration: "none" }}
-                  to=""
+                  to="/student/courses"
                 >
                   Subscriptions
                 </Typography>
@@ -162,7 +162,7 @@ const App: React.FC = () => {
       <footer>
         <AppBar
           color="primary"
-          position="static"
+          position="fixed"
           sx={{ top: "auto", bottom: 0, padding: 3 }}
         >
           <Toolbar>
@@ -185,5 +185,6 @@ const App: React.FC = () => {
     </>
   );
 };
+
 
 export default App;

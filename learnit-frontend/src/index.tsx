@@ -22,6 +22,12 @@ import StudentHome from "./components/student/StudentHome";
 import InstructorHome from "./components/instructor/InstructorHome";
 import AuthContextProvider from "./services/context/auth/AuthContextProvider";
 import ProtectedRoute from "./components/ProtectedRoute";
+import StudentProfile from "./components/student/StudentProfile";
+import UpdateStudentProfile from "./components/student/UpdateStudentProfile";
+import CourseDiscussion from "./components/CourseDiscussion";
+import Video from "./components/instructor/Video";
+import MyProfile from "./components/instructor/Myprofile";
+import UpdateInstructorProfile from "./components/instructor/UpdateInstructorProfile";
 
 const router = createBrowserRouter([
   {
@@ -54,11 +60,7 @@ const router = createBrowserRouter([
       },
       {
         path: "student/home",
-        element: (
-          <ProtectedRoute>
-            <StudentHome />
-          </ProtectedRoute>
-        ),
+        element: <StudentHome />,
       },
       {
         path: "instructor/signup",
@@ -70,35 +72,56 @@ const router = createBrowserRouter([
       },
       {
         path: "instructor/home",
-        element: (
-          <ProtectedRoute>
-            <InstructorHome />
-          </ProtectedRoute>
-        ),
+        element: <InstructorHome />,
       },
       {
         path: "courses",
+        element: <CourseCatalogPage />,
+      },
+      {
+        path: "/instructor/home/coursebuilder",
         element: (
           <ProtectedRoute>
-            <CourseCatalogPage />
+            <CourseBuilder />
           </ProtectedRoute>
         ),
       },
-      {
-        path: "coursebuilder",
-        element: <CourseBuilder />,
-      },
+        {
+          path: "instructor/home/coursebuilder/video",
+          element: <Video />,
+        },
+      
       {
         path: "course/:id",
-        element: (
-          <ProtectedRoute>
-            <CourseDetailPage />
-          </ProtectedRoute>
-        ),
+        element: <CourseDetailPage />,
+      },
+      {
+        path: "coursediscussion/:id",
+        element: <CourseDiscussion />,
       },
       {
         path: "coursedescription/:id",
         element: <CourseDescription />,
+      },
+      {
+        path: "student/home/profile/:id",
+        element: <StudentProfile />,
+      },
+      {
+        path: "/instructor/home/myprofile/updateprofile/:id",
+        element: (
+          <ProtectedRoute>
+            <UpdateInstructorProfile />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/instructor/home/myprofile",
+        element: (
+          
+            <MyProfile />
+          
+        ),
       },
     ],
   },

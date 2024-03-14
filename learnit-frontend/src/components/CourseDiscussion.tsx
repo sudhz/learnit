@@ -1,83 +1,152 @@
-import React, { useState, useEffect } from 'react';
-import { TextField, Button, Box, Typography, List, ListItem, ListItemText } from '@mui/material';
+import React, { useState, useEffect } from "react";
+import {
+  TextField,
+  Button,
+  Box,
+  Typography,
+  List,
+  ListItem,
+  ListItemText,
+  Grid,
+  Stack,
+} from "@mui/material";
 import axios from "axios";
- 
-interface Comment {
-  id: number;
-  text: string;
-}
+import { Link, useParams } from "react-router-dom";
  
 const CourseDiscussion: React.FC = () => {
- const [comments, setComments] = useState<Comment[]>([]);
- const [newComment, setNewComment] = useState<string>('');
+  const { id } = useParams();
+  const [comments, setComments] = useState<Comment[]>([]);
+  const [newComment, setNewComment] = useState("");
  
- useEffect(() => {
+  type Comment = {
+    commentId: number;
+    commentText: string;
+    courseId: number;
+  };
+ 
+  type addedComment = {
+    commentText: string;
+    courseId: number;
+  };
+ 
+  useEffect(() => {
     const fetchComments = async () => {
       try {
-        const response = await axios.get<Comment>('http://localhost:5292/api/comment');
-        console.log(response.data);
-        // setComments(response.data);
+        const commentResponse = await axios.get(
+          `http://localhost:5292/api/comment/course/${id}`
+        );
+ 
+        setComments(commentResponse.data);
+ 
+        console.log(commentResponse.data);
       } catch (error) {
-        console.error('Error fetching comments:', error);
+        console.error("Error fetching comments:", error);
       }
     };
     fetchComments();
- });
+  }, [id]);
  
- const handleSubmitComment = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const newCommentObj: Comment = { id: Date.now(), text: newComment };
+  // useEffect(() => {
+  //   const fetchComments = async () => {
+  //      try {
+  //        const commentResponse = await axios.get(
+  //          `http://localhost:5292/api/comment/course/${id}`
+  //        );
+ 
+  //        // Check if the response data is an array and if it's empty
+  //        if (Array.isArray(commentResponse.data) && commentResponse.data.length === 0) {
+  //          console.log("No comments");
+  //        } else {
+  //          setComments(commentResponse.data);
+  //        }
+ 
+  //        console.log(commentResponse.data);
+  //      } catch (error) {
+  //        console.error("Error fetching comments:", error);
+  //      }
+  //   };
+  //   fetchComments();
+  //  }, [id]);
+ 
+  const addComment = async () => {
     try {
-      // Send the new comment to the server
-      await axios.post('http://localhost:5292/api/Comment', newCommentObj);
-      // Update the local state to include the new comment
-      setComments([...comments, newCommentObj]);
-      setNewComment('');
-    } catch (error) {
-      console.error('Error submitting comment:', error);
-    }
- };
+      const commentPayload: addedComment = {
+        commentText: newComment,
+        courseId: Number(id),
+      };
+      console.log(commentPayload);
  
- return (
-    <Box sx={{ padding: 2 }}>
-      <Typography variant="h6" gutterBottom>
-        Comment on the Course
-      </Typography>
-      <form onSubmit={handleSubmitComment}>
+      const response = await axios.post(
+        `http://localhost:5292/api/comment/course/${id}`,
+        commentPayload,
+        { headers: { "Content-Type": "application/json" } }
+      );
+      console.log(response.data);
+ 
+      const newCommentData = response.data;
+      setComments((prevComments) => [...prevComments, newCommentData]);
+ 
+      setNewComment("");
+    } catch (error) {
+      console.error("Error adding comment:", error);
+    }
+  };
+ 
+  return (
+    <Box display="flex" height="100vh" width="100%" gap={2} >
+ 
+      <Box width="20%" padding={2} height="100%" sx={{ bgcolor: "#1976d2" }}>
+ 
+ 
+        <Stack spacing={2} mt={5}>
+          <Typography
+            variant="h5"
+            component={Link}
+            sx={{ color: "white", textDecoration: "none" }}
+            to=""
+          >
+            Back to Courses
+          </Typography>
+        </Stack>
+      </Box>
+ 
+    <Box width="60%" sx={{ padding: 2 }}>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          addComment();
+        }}
+      >
         <TextField
-          fullWidth
-          multiline
-          rows={4}
-          label="Your Comment"
           value={newComment}
           onChange={(e) => setNewComment(e.target.value)}
+          variant="outlined"
           margin="normal"
+          fullWidth
+          id="comment"
+          label="Enter your comment"
+          name="comment"
+          autoComplete="comment"
         />
         <Button type="submit" variant="contained" color="primary">
-          Post Comment
+          Add Comment
         </Button>
       </form>
  
       <Typography variant="h6" gutterBottom sx={{ marginTop: 2 }}>
         Comments
       </Typography>
-      {/* <List>
+ 
+      <List>
         {comments.map((comment) => (
-          <ListItem key={comment.id}>
-            <ListItemText primary={comment.text} />
+          <ListItem key={comment.commentId}>
+            <ListItemText primary={comment.commentText} />
           </ListItem>
         ))}
-      </List> */}
-      <List>
-      {comments.map((comment) => (
-        <ListItem key={comment.id}>
-      <ListItemText primary={comment.text} />
-    </ListItem>
-  ))}
-</List>
- 
+      </List>
     </Box>
- );
+    </Box>
+  );
 };
  
 export default CourseDiscussion;
