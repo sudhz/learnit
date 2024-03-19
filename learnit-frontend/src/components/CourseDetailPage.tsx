@@ -219,40 +219,7 @@ const CourseDetailPage: React.FC = () => {
                     background: "white",
                   }}
                 >
-                  Welcome to our comprehensive online learning platform! Our
-                  courses are designed to empower you with the knowledge and
-                  skills needed to succeed in today's dynamic world. Whether
-                  you're a beginner or an experienced professional, our courses
-                  cater to diverse skill levels and backgrounds.
-                  <br />
-                  <br />
-                  <strong>Key Features:</strong>
-                  <ul>
-                    <li>
-                      Expert-led instruction: Learn from industry professionals
-                      and experienced educators.
-                    </li>
-                    <li>
-                      Flexible learning: Access courses at your own pace,
-                      anytime, and from anywhere.
-                    </li>
-                    <li>
-                      Engaging content: Interactive lessons, real-world
-                      projects, and assessments to reinforce learning.
-                    </li>
-                    <li>
-                      Comprehensive curriculum: Covering essential topics and
-                      the latest advancements in the field.
-                    </li>
-                    <li>
-                      Community support: Connect with peers, share insights, and
-                      collaborate on projects.
-                    </li>
-                  </ul>
-                  <br />
-                  Join us on a learning journey where you'll gain practical
-                  skills, boost your confidence, and achieve your personal and
-                  professional goals. Start your learning adventure today!
+             Description
                 </Typography>
               </Card>
             </div>
