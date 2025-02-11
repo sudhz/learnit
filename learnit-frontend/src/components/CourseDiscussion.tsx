@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import { Link, useParams } from "react-router-dom";
- 
+ AA
 const CourseDiscussion: React.FC = () => {
   const { id } = useParams();
   const [comments, setComments] = useState<Comment[]>([]);
